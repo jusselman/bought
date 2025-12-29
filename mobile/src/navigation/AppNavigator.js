@@ -5,34 +5,25 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 
-// Auth Screens
 import LoginScreen from '../screens/auth/LoginScreen';
 import RegisterScreen from '../screens/auth/RegisterScreen';
-
-// Main Screens 
 import HomeScreen from '../screens/main/HomeScreen';
 import DiscoverScreen from '../screens/main/DiscoverScreen';
-import ProfileScreen from '../screens/main/ProfileScreen';
 import ReleasesScreen from '../screens/main/ReleasesScreen';
+import ProfileScreen from '../screens/main/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// Auth Stack Navigator
 const AuthNavigator = () => {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
     </Stack.Navigator>
   );
 };
 
-// Main App Tab Navigator
 const MainNavigator = () => {
   return (
     <Tab.Navigator
@@ -40,7 +31,6 @@ const MainNavigator = () => {
         headerShown: false,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Discover') {
@@ -50,7 +40,6 @@ const MainNavigator = () => {
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
           }
-
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: '#000000',
@@ -76,7 +65,6 @@ const MainNavigator = () => {
   );
 };
 
-// Root Navigator
 const AppNavigator = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
