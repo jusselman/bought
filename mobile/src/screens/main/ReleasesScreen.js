@@ -1,5 +1,3 @@
-// ReleasesScreen.js - src/screens/main/ReleasesScreen.js
-import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const ReleasesScreen = () => {

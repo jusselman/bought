@@ -1,18 +1,22 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_URL = 'http://localhost:6001';
+// Use 127.0.0.1 instead of localhost for iOS Simulator
+const API_URL = 'http://10.0.0.151:6001';
+
+console.log('API connecting to:', API_URL);
 
 const api = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 15000,
 });
 
-// Add token to requests automatically
 api.interceptors.request.use(
   async (config) => {
+    console.log('API Request:', config.method.toUpperCase(), config.url);
     const token = await AsyncStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -20,16 +24,25 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
+    console.error('Request error:', error);
     return Promise.reject(error);
   }
 );
 
-// Handle responses and errors
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log('API Response:', response.config.url, '- Success');
+    return response;
+  },
   (error) => {
+    console.error('API Error:', error.message);
+    if (error.response) {
+      console.error('Response data:', error.response.data);
+      console.error('Response status:', error.response.status);
+    } else {
+      console.error('No response received:', error.request);
+    }
     if (error.response?.status === 401) {
-      // Token expired or invalid - logout user
       AsyncStorage.removeItem('token');
       AsyncStorage.removeItem('user');
     }

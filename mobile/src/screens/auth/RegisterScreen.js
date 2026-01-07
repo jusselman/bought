@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   View,
   Text,
@@ -23,14 +23,6 @@ const registerSchema = yup.object().shape({
   name: yup.string().required('Name is required'),
   email: yup.string().email('Invalid email').required('Email is required'),
   password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
-  birthday: yup.string(),
-  bio: yup.string(),
-  website: yup.string(),
-  city: yup.string(),
-  instagram: yup.string(),
-  tiktok: yup.string(),
-  facebook: yup.string(),
-  twitter: yup.string(),
 });
 
 const RegisterScreen = ({ navigation }) => {
@@ -64,14 +56,12 @@ const RegisterScreen = ({ navigation }) => {
     try {
       const formData = new FormData();
       
-      // Add all text fields
       Object.keys(values).forEach((key) => {
         if (key !== 'picture' && values[key]) {
           formData.append(key, values[key]);
         }
       });
 
-      // Add profile picture if selected
       if (profileImage) {
         const uriParts = profileImage.uri.split('.');
         const fileType = uriParts[uriParts.length - 1];
@@ -84,7 +74,6 @@ const RegisterScreen = ({ navigation }) => {
         formData.append('picturePath', `profile.${fileType}`);
       }
 
-      // Add nested socialMedia object
       formData.append('socialMedia', JSON.stringify({
         instagram: values.instagram || '',
         tiktok: values.tiktok || '',
@@ -103,9 +92,23 @@ const RegisterScreen = ({ navigation }) => {
         navigation.navigate('Login');
       }
     } catch (error) {
-      console.error('Registration error:', error);
-      Alert.alert('Error', error.response?.data?.message || 'Registration failed');
-    } finally {
+  console.error('=== REGISTRATION ERROR DEBUG ===');
+  if (error.response) {
+    // Server responded with error
+    console.error('Response Status:', error.response.status);
+    console.error('Response Data:', error.response.data);
+    Alert.alert('Error', error.response.data?.message || 'Registration failed');
+  } else if (error.request) {
+    // No response (network issue)
+    console.error('No response received:', error.request);
+    Alert.alert('Network Error', 'Could not connect to server. Check your connection or server status.');
+  } else {
+    // Other errors
+    console.error('Error Message:', error.message);
+    Alert.alert('Error', error.message || 'Something went wrong');
+  }
+  setLoading(false);  // Add this to reset loading state on error
+} finally {
       setLoading(false);
     }
   };
@@ -153,7 +156,6 @@ const RegisterScreen = ({ navigation }) => {
             setFieldValue,
           }) => (
             <View style={styles.form}>
-              {/* Profile Picture */}
               <TouchableOpacity
                 style={styles.imagePickerContainer}
                 onPress={() => pickImage(setFieldValue)}
@@ -168,7 +170,6 @@ const RegisterScreen = ({ navigation }) => {
                 )}
               </TouchableOpacity>
 
-              {/* Required Fields */}
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Required Information</Text>
 
@@ -225,18 +226,8 @@ const RegisterScreen = ({ navigation }) => {
                 )}
               </View>
 
-              {/* Optional Fields */}
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Additional Info (Optional)</Text>
-
-                <TextInput
-                  style={styles.input}
-                  placeholder="Birthday (MM/DD/YYYY)"
-                  placeholderTextColor="#999"
-                  value={values.birthday}
-                  onChangeText={handleChange('birthday')}
-                  onBlur={handleBlur('birthday')}
-                />
 
                 <TextInput
                   style={styles.input}
@@ -251,16 +242,6 @@ const RegisterScreen = ({ navigation }) => {
 
                 <TextInput
                   style={styles.input}
-                  placeholder="Website"
-                  placeholderTextColor="#999"
-                  value={values.website}
-                  onChangeText={handleChange('website')}
-                  onBlur={handleBlur('website')}
-                  autoCapitalize="none"
-                />
-
-                <TextInput
-                  style={styles.input}
                   placeholder="City"
                   placeholderTextColor="#999"
                   value={values.city}
@@ -269,52 +250,6 @@ const RegisterScreen = ({ navigation }) => {
                 />
               </View>
 
-              {/* Social Media */}
-              <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Social Media</Text>
-
-                <TextInput
-                  style={styles.input}
-                  placeholder="Instagram Handle"
-                  placeholderTextColor="#999"
-                  value={values.instagram}
-                  onChangeText={handleChange('instagram')}
-                  onBlur={handleBlur('instagram')}
-                  autoCapitalize="none"
-                />
-
-                <TextInput
-                  style={styles.input}
-                  placeholder="TikTok Handle"
-                  placeholderTextColor="#999"
-                  value={values.tiktok}
-                  onChangeText={handleChange('tiktok')}
-                  onBlur={handleBlur('tiktok')}
-                  autoCapitalize="none"
-                />
-
-                <TextInput
-                  style={styles.input}
-                  placeholder="Facebook"
-                  placeholderTextColor="#999"
-                  value={values.facebook}
-                  onChangeText={handleChange('facebook')}
-                  onBlur={handleBlur('facebook')}
-                  autoCapitalize="none"
-                />
-
-                <TextInput
-                  style={styles.input}
-                  placeholder="Twitter Handle"
-                  placeholderTextColor="#999"
-                  value={values.twitter}
-                  onChangeText={handleChange('twitter')}
-                  onBlur={handleBlur('twitter')}
-                  autoCapitalize="none"
-                />
-              </View>
-
-              {/* Register Button */}
               <TouchableOpacity
                 style={[styles.button, loading && styles.buttonDisabled]}
                 onPress={handleSubmit}
@@ -325,7 +260,6 @@ const RegisterScreen = ({ navigation }) => {
                 </Text>
               </TouchableOpacity>
 
-              {/* Login Link */}
               <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.linkText}>
                   Already have an account? <Text style={styles.linkBold}>Login here</Text>

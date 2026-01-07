@@ -1,4 +1,3 @@
-// DiscoverScreen.js - src/screens/main/DiscoverScreen.js
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 

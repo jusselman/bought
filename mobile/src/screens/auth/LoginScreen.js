@@ -40,7 +40,6 @@ const LoginScreen = ({ navigation }) => {
           user: response.data.user,
           token: response.data.token,
         }));
-        // Navigation will be handled automatically by navigation state
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -59,13 +58,11 @@ const LoginScreen = ({ navigation }) => {
       style={styles.container}
     >
       <View style={styles.content}>
-        {/* Header */}
         <View style={styles.header}>
           <Text style={styles.logo}>BOUGHT</Text>
           <Text style={styles.tagline}>Drop Culture, Delivered</Text>
         </View>
 
-        {/* Login Form */}
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={loginSchema}
@@ -113,7 +110,6 @@ const LoginScreen = ({ navigation }) => {
                 )}
               </View>
 
-              {/* Login Button */}
               <TouchableOpacity
                 style={[styles.button, loading && styles.buttonDisabled]}
                 onPress={handleSubmit}
@@ -126,7 +122,6 @@ const LoginScreen = ({ navigation }) => {
                 )}
               </TouchableOpacity>
 
-              {/* Register Link */}
               <View style={styles.footer}>
                 <Text style={styles.footerText}>Don't have an account? </Text>
                 <TouchableOpacity onPress={() => navigation.navigate('Register')}>

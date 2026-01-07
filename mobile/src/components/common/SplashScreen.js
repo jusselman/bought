@@ -1,24 +1,11 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
 
 const SplashScreen = ({ onFinish }) => {
-  const fadeAnim = new Animated.Value(0);
-  const scaleAnim = new Animated.Value(0.3);
+  const fadeAnim = new Animated.Value(1); // Start visible
+  const scaleAnim = new Animated.Value(1); // Start at full scale
 
   useEffect(() => {
-    Animated.parallel([
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true,
-      }),
-      Animated.spring(scaleAnim, {
-        toValue: 1,
-        friction: 4,
-        useNativeDriver: true,
-      }),
-    ]).start();
-
     const timer = setTimeout(() => {
       Animated.timing(fadeAnim, {
         toValue: 0,
@@ -27,9 +14,11 @@ const SplashScreen = ({ onFinish }) => {
       }).start(() => {
         onFinish();
       });
-    }, 2500);
+    }, 3000); // Show for 3 seconds
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   return (
@@ -68,8 +57,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   tagline: {
-    fontSize: 16,
-    color: '#CCCCCC',
+    fontSize: 18,
+    color: '#FFFFFF',
     letterSpacing: 2,
   },
 });
