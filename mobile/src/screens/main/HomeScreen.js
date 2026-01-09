@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Alert,
+  Dimensions,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
@@ -15,6 +16,10 @@ import { setPosts, setLoading } from '../../redux/slices/postSlice';
 import { setLogout } from '../../redux/slices/authSlice';
 import api from '../../services/api';
 import PostCard from '../../components/posts/PostCard';
+
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+const HEADER_HEIGHT = 97; // paddingTop 60 + paddingBottom 16 + text height ~21
+const TAB_BAR_HEIGHT = 85; // From AppNavigator
 
 const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -37,7 +42,6 @@ const HomeScreen = ({ navigation }) => {
         if (pageNum === 1) {
           dispatch(setPosts(response.data.posts));
         } else {
-          // Append for pagination
           dispatch(setPosts([...posts, ...response.data.posts]));
         }
       }
@@ -64,12 +68,10 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const handlePostPress = (postId) => {
-    // Navigate to post detail screen (we'll create this later)
     console.log('Post pressed:', postId);
   };
 
   const handleUserPress = (userId) => {
-    // Navigate to user profile (we'll create this later)
     console.log('User pressed:', userId);
   };
 
@@ -105,15 +107,19 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 
-  const renderEmpty = () => (
-    <View style={styles.emptyContainer}>
-      <Ionicons name="newspaper-outline" size={64} color="#CCC" />
-      <Text style={styles.emptyText}>No posts yet</Text>
-      <Text style={styles.emptySubtext}>
-        Follow brands and users to see their posts here
-      </Text>
-    </View>
-  );
+  const renderEmpty = () => {
+    const availableHeight = SCREEN_HEIGHT - HEADER_HEIGHT - TAB_BAR_HEIGHT;
+    
+    return (
+      <View style={[styles.emptyContainer, { height: availableHeight }]}>
+        <Ionicons name="newspaper-outline" size={64} color="#CCC" />
+        <Text style={styles.emptyText}>No posts yet</Text>
+        <Text style={styles.emptySubtext}>
+          Follow brands and users to see their posts here
+        </Text>
+      </View>
+    );
+  };
 
   const renderFooter = () => {
     if (!loading) return null;
@@ -152,7 +158,7 @@ const HomeScreen = ({ navigation }) => {
         ListEmptyComponent={renderEmpty}
         ListFooterComponent={renderFooter}
         contentContainerStyle={
-          posts.length === 0 ? styles.emptyList : null
+          posts.length === 0 ? styles.emptyListContent : styles.listContent
         }
       />
     </View>
@@ -191,15 +197,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#666',
   },
-  emptyList: {
-    flexGrow: 1,
+  listContent: {
+    paddingBottom: 100, // Extra padding for tab bar
+  },
+  emptyListContent: {
+    flexGrow: 0, // Don't stretch to fill
   },
   emptyContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 40,
-    paddingTop: 60,
   },
   emptyText: {
     fontSize: 20,

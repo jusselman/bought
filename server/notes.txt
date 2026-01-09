@@ -1,0 +1,54 @@
+server/
+├── controllers/       # Request handlers
+│   ├── auth.js
+│   ├── users.js
+│   ├── posts.js
+│   ├── releases.js
+│   ├── brands.js
+│   └── notifications.js
+├── middleware/        # Custom middleware
+│   ├── auth.js
+│   ├── validation.js
+│   └── errorHandler.js
+├── models/           # Database schemas
+│   ├── User.js
+│   ├── Brand.js
+│   ├── Release.js
+│   ├── Post.js
+│   └── Notification.js
+├── routes/           # API routes
+│   ├── auth.js
+│   ├── users.js
+│   ├── posts.js
+│   ├── releases.js
+│   ├── brands.js
+│   └── notifications.js
+├── public/           # Static files
+│   └── assets/       # Uploaded images
+├── scripts/          # Utility scripts
+├── index.js          # Server entry point
+├── package.json
+└── .env             # Environment variables
+
+
+mobile/
+├── src/
+│   ├── redux/
+│   │   ├── slices/
+│   │   │   └── authSlice.js         # authSlice
+│   │   └── store.js                 # Redux store 
+│   │
+│   ├── services/
+│   │   └── api.js                    # APIs 
+│   │
+│   ├── screens/
+│   │   └── auth/
+│   │       └── RegisterScreen.js     # Register screen 
+│   │
+│   └── components/
+│       └── common/
+│           └── SplashScreen.js       # Splash screen goes here
+│
+├── App.js                            # Main point of entry
+├── package.json
+└── ...other expo files

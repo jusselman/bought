@@ -1,71 +1,41 @@
 import express from "express";
+// Import from JSON-based controller for now
 import {
-  createBrand,
   getAllBrands,
   getBrand,
-  getPopularBrands,
-  updateBrand,
-  deleteBrand,
-  searchBrands
-} from "../controllers/brands.js";
-import { verifyToken } from "../middleware/auth.js";
-import { validateObjectId, validateRequiredFields, sanitizeInput } from "../middleware/validation.js";
+  searchBrands,
+  followBrand,
+  getUserFollowedBrands
+} from "../controllers/brandsFromJSON.js";
+import { verifyToken, verifyOwnership } from "../middleware/auth.js";
+import { validateObjectId } from "../middleware/validation.js";
 
 const router = express.Router();
 
-/* CREATE - Create new brand */
-router.post(
-  '/',
-  verifyToken,
-  sanitizeInput,
-  validateRequiredFields(['name', 'description', 'logoPath', 'websiteUrl']),
-  createBrand
-);
-
-/* READ - Get all brands */
-router.get(
-  '/',
-  verifyToken,
-  getAllBrands
-);
-
-/* READ - Get popular brands */
-router.get(
-  '/popular',
-  verifyToken,
-  getPopularBrands
-);
+/* GET - Get all brands */
+router.get("/", verifyToken, getAllBrands);
 
 /* GET - Search brands */
+router.get("/search/query", verifyToken, searchBrands);
+
+/* GET - Get single brand */
+router.get("/:id", validateObjectId('id'), verifyToken, getBrand);
+
+/* GET - Get user's followed brands */
 router.get(
-  '/search/query',
+  "/user/:userId/following",
+  validateObjectId('userId'),
   verifyToken,
-  searchBrands
+  getUserFollowedBrands
 );
 
-/* READ - Get single brand */
-router.get(
-  '/:id',
-  validateObjectId('id'),
+/* POST - Follow/Unfollow brand */
+router.post(
+  "/user/:userId/follow",
+  validateObjectId('userId'),
   verifyToken,
-  getBrand
-);
-
-/* PATCH - Update brand */
-router.patch(
-  '/:id',
-  validateObjectId('id'),
-  verifyToken,
-  sanitizeInput,
-  updateBrand
-);
-
-/* DELETE - Delete brand */
-router.delete(
-  '/:id',
-  validateObjectId('id'),
-  verifyToken,
-  deleteBrand
+  verifyOwnership('userId'),
+  followBrand
 );
 
 export default router;

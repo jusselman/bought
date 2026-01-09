@@ -1,0 +1,402 @@
+[
+  {
+    "_id": "69616cec658774aaeaae1421",
+    "name": "GUCCI",
+    "linkToWebsite": "www.gucci.com",
+    "lastUpdated": 1686424036000,
+    "brandImage": "https://picsum.photos/seed/gucci/800/600",
+    "about": "Gucci is a renowned Italian luxury fashion brand, famous for its timeless designs and high-quality products. Established in Florence in 1921, Gucci has become a symbol of elegance and sophistication. From iconic handbags to extraordinary runway shows, Gucci continues to redefine the world of luxury fashion and captivate audiences worldwide."
+  },
+  {
+    "_id": "69616cec658774aaeaae1422",
+    "name": "LOUIS VUITTON",
+    "linkToWebsite": "www.louisvuitton.com",
+    "lastUpdated": 1686337636000,
+    "brandImage": "https://picsum.photos/seed/louisvuitton/800/600",
+    "about": "Louis Vuitton is a French luxury fashion house known for its exquisite leather goods, ready-to-wear collections, and innovative accessories. Founded in 1854, Louis Vuitton has become synonymous with craftsmanship and elegance. From the iconic monogram pattern to cutting-edge collaborations, Louis Vuitton continues to push the boundaries of fashion and set new trends worldwide."
+  },
+  {
+    "_id": "69616cec658774aaeaae1423",
+    "name": "CHANEL",
+    "linkToWebsite": "www.chanel.com",
+    "lastUpdated": 1686251236000,
+    "brandImage": "https://picsum.photos/seed/chanel/800/600",
+    "about": "Chanel is a legendary French luxury fashion brand known for its iconic designs and innovative creations. Founded by Coco Chanel in 1910, the brand has revolutionized the world of fashion with its modern and elegant designs. From the iconic little black dress to the No. 5 perfume, Chanel has become a symbol of sophistication and timeless elegance, inspiring fashion enthusiasts worldwide."
+  },
+  {
+    "_id": "69616cec658774aaeaae1424",
+    "name": "DIOR",
+    "linkToWebsite": "www.dior.com",
+    "lastUpdated": 1686164836000,
+    "brandImage": "https://picsum.photos/seed/dior/800/600",
+    "about": "Dior is a prestigious French luxury fashion brand known for its sophisticated and innovative designs. Founded in 1946 by Christian Dior, the brand has become a symbol of elegance and haute couture. From stunning gowns to iconic fragrances, Dior continues to be at the forefront of the fashion industry, setting trends and captivating audiences around the globe."
+  },
+  {
+    "_id": "69616cec658774aaeaae1425",
+    "name": "DOLCE & GABBANA",
+    "linkToWebsite": "www.dolcegabbana.com",
+    "lastUpdated": 1686078436000,
+    "brandImage": "https://picsum.photos/seed/dolcegabbana/800/600",
+    "about": "Dolce & Gabbana is an Italian luxury fashion brand known for its vibrant and innovative creations. Founded in 1985 by Domenico Dolce and Stefano Gabbana, the brand has become a symbol of luxury and glamour. From exquisite ready-to-wear collections to bold accessories, Dolce & Gabbana continues to push the boundaries of fashion and inspire a global audience with its unique style."
+  },
+  {
+    "_id": "69616cec658774aaeaae1426",
+    "name": "FENDI",
+    "linkToWebsite": "www.fendi.com",
+    "lastUpdated": 1685992036000,
+    "brandImage": "https://picsum.photos/seed/fendi/800/600",
+    "about": "Fendi is a distinguished Italian luxury fashion brand known for its innovative designs and high-quality products. Founded in 1925 by Adele and Edoardo Fendi, the brand has become a symbol of craftsmanship and timeless elegance. From its iconic Baguette handbag to its avant-garde runway shows, Fendi continues to redefine the world of luxury fashion and captivate fashion enthusiasts worldwide."
+  },
+  {
+    "_id": "69616cec658774aaeaae1427",
+    "name": "BALENCIAGA",
+    "linkToWebsite": "www.balenciaga.com",
+    "lastUpdated": 1685905636000,
+    "brandImage": "https://picsum.photos/seed/balenciaga/800/600",
+    "about": "Balenciaga is a Spanish luxury fashion brand known for its bold and innovative designs. Founded in 1919 by Cristóbal Balenciaga, the brand has established itself as a prominent name in the fashion industry. Balenciaga is renowned for its avant-garde approach, pushing boundaries with unconventional silhouettes, experimentation with proportions, and distinctive use of materials."
+  },
+  {
+    "_id": "69616cec658774aaeaae1428",
+    "name": "PRADA",
+    "linkToWebsite": "www.prada.com",
+    "lastUpdated": 1685819236000,
+    "brandImage": "https://picsum.photos/seed/prada/800/600",
+    "about": "Prada is an Italian luxury fashion brand known for its innovative designs and high-quality products. Founded in 1913 by Mario Prada, the brand has become a symbol of elegance and sophistication. From its iconic Nylon bags to its avant-garde runway shows, Prada continues to redefine the world of luxury fashion and captivate fashion enthusiasts worldwide."
+  },
+  {
+    "_id": "69616cec658774aaeaae1429",
+    "name": "GIVENCHY",
+    "linkToWebsite": "www.givenchy.com",
+    "lastUpdated": 1685732836000,
+    "brandImage": "https://picsum.photos/seed/givenchy/800/600",
+    "about": "Givenchy is a French luxury fashion brand known for its innovative designs and high-quality products. Founded in 1952 by Hubert de Givenchy, the brand has become a symbol of elegance and sophistication. From its iconic Audrey Hepburn-inspired little black dress to its cutting-edge runway shows, Givenchy continues to redefine the world of luxury fashion and captivate fashion enthusiasts worldwide."
+  },
+  {
+    "_id": "69616cec658774aaeaae142a",
+    "name": "VALENTINO",
+    "linkToWebsite": "www.valentino.com",
+    "lastUpdated": 1685646436000,
+    "brandImage": "https://picsum.photos/seed/valentino/800/600",
+    "about": "Valentino is an Italian luxury fashion brand known for its elegant designs and high-quality products. Founded in 1960 by Valentino Garavani, the brand has become a symbol of timeless elegance and glamour. From its iconic Rockstud accessories to its exquisite couture collections, Valentino continues to captivate audiences worldwide with its innovative approach to luxury fashion."
+  },
+  {
+    "_id": "69616cec658774aaeaae142b",
+    "name": "VERSACE",
+    "linkToWebsite": "www.versace.com",
+    "lastUpdated": 1685560036000,
+    "brandImage": "https://picsum.photos/seed/versace/800/600",
+    "about": "Versace is an Italian luxury fashion brand known for its bold designs and high-quality products. Founded in 1978 by Gianni Versace, the brand has become a symbol of glamour and extravagance. From its iconic Medusa logo to its groundbreaking runway shows, Versace continues to push the boundaries of fashion and captivate audiences worldwide with its unique style."
+  },
+  {
+    "_id": "69616cec658774aaeaae142c",
+    "name": "BURBERRY",
+    "linkToWebsite": "www.burberry.com",
+    "lastUpdated": 1685473636000,
+    "brandImage": "https://picsum.photos/seed/burberry/800/600",
+    "about": "Burberry is a British luxury fashion brand known for its iconic designs and high-quality products. Founded in 1856 by Thomas Burberry, the brand has become synonymous with innovation and craftsmanship. From its signature trench coats to its iconic check pattern, Burberry continues to redefine the world of luxury fashion and captivate fashion enthusiasts worldwide."
+  },
+  {
+    "_id": "69616cec658774aaeaae142d",
+    "name": "ALEXANDER MCQUEEN",
+    "linkToWebsite": "www.alexandermcqueen.com",
+    "lastUpdated": 1685387236000,
+    "brandImage": "https://picsum.photos/seed/alexandermcqueen/800/600",
+    "about": "Alexander McQueen is a British luxury fashion brand known for its innovative and dramatic designs. Founded in 1992 by Lee Alexander McQueen, the brand has become a symbol of avant-garde fashion and creative expression. From its groundbreaking runway shows to its exquisite couture collections, Alexander McQueen continues to captivate audiences worldwide with its unique approach to luxury fashion."
+  },
+  {
+    "_id": "69616cec658774aaeaae142e",
+    "name": "MARC JACOBS",
+    "linkToWebsite": "www.marcjacobs.com",
+    "lastUpdated": 1685214436000,
+    "brandImage": "https://picsum.photos/seed/marcjacobs/800/600",
+    "about": "Marc Jacobs is an American luxury fashion brand known for its eclectic and innovative designs. Founded in 1984 by Marc Jacobs, the brand has become a symbol of contemporary style and creative expression. From its iconic handbags to its groundbreaking runway shows, Marc Jacobs continues to redefine the world of luxury fashion and captivate fashion enthusiasts worldwide."
+  },
+  {
+    "_id": "69616cec658774aaeaae142f",
+    "name": "MIU MIU",
+    "linkToWebsite": "www.miumiu.com",
+    "lastUpdated": 1685128036000,
+    "brandImage": "https://picsum.photos/seed/miumiu/800/600",
+    "about": "Miu Miu is an Italian luxury fashion brand known for its playful and innovative designs. Founded in 1993 by Miuccia Prada, the brand has become a symbol of youthful style and modern elegance. From its standout ready-to-wear collections to its whimsical accessories, Miu Miu continues to captivate audiences worldwide with its unique approach to luxury fashion."
+  },
+  {
+    "_id": "69616cec658774aaeaae1430",
+    "name": "STELLA MCCARTNEY",
+    "linkToWebsite": "www.stellamccartney.com",
+    "lastUpdated": 1685041636000,
+    "brandImage": "https://picsum.photos/seed/stellamccartney/800/600",
+    "about": "Stella McCartney is a British luxury fashion brand known for its eco-friendly and innovative designs. Founded in 2001 by Stella McCartney, the brand has become a symbol of sustainable fashion and modern elegance. From its stylish ready-to-wear collections to its cruelty-free accessories, Stella McCartney continues to redefine the world of luxury fashion with its ethical approach and captivating designs."
+  },
+  {
+    "_id": "69616cec658774aaeaae1431",
+    "name": "TOM FORD",
+    "linkToWebsite": "www.tomford.com",
+    "lastUpdated": 1684955236000,
+    "brandImage": "https://picsum.photos/seed/tomford/800/600",
+    "about": "Tom Ford is an American luxury fashion brand known for its sleek and sophisticated designs. Founded in 2006 by Tom Ford, the brand has become a symbol of modern glamour and timeless elegance. From its iconic eyewear to its luxurious ready-to-wear collections, Tom Ford continues to captivate audiences worldwide with its refined approach to luxury fashion."
+  },
+  {
+    "_id": "69616cec658774aaeaae1432",
+    "name": "FFORME",
+    "linkToWebsite": "www.fformestudio.com",
+    "lastUpdated": 1684868836000,
+    "brandImage": "https://picsum.photos/seed/fforme/800/600",
+    "about": "FFORME is a contemporary fashion brand known for its architecture-inspired designs and modular layering pieces. Launched by creative director Paul Helbers, industry veteran Laura Vazquez, and tech entrepreneur Nina Khosla, FFORME celebrates the female form with a perfect capsule wardrobe of elongated T-shirt dresses, ankle pants, sheer ribbed turtlenecks, and knit corsets. The brand's mostly black-and-white color palette, with subtle washes of pastels, offers a stylish and versatile approach to modern fashion."
+  },
+  {
+    "_id": "69616cec658774aaeaae1433",
+    "name": "YVES SAINT LAURENT",
+    "linkToWebsite": "www.ysl.com",
+    "lastUpdated": 1684782436000,
+    "brandImage": "https://picsum.photos/seed/yvessaintlaurent/800/600",
+    "about": "Yves Saint Laurent is a French luxury fashion brand known for its iconic designs and high-quality products. Founded in 1961 by Yves Saint Laurent and Pierre Bergé, the brand has become a symbol of elegance and sophistication. From its iconic Le Smoking tuxedo to its groundbreaking runway shows, Yves Saint Laurent continues to redefine the world of luxury fashion and captivate fashion enthusiasts worldwide."
+  },
+  {
+    "_id": "69616cec658774aaeaae1434",
+    "name": "CELINE",
+    "linkToWebsite": "www.celine.com",
+    "lastUpdated": 1684696036000,
+    "brandImage": "https://picsum.photos/seed/celine/800/600",
+    "about": "Celine is a French luxury fashion brand known for its minimalistic and sophisticated designs. Founded in 1945 by Céline Vipiana, the brand has become a symbol of modern elegance and timeless style. From its iconic handbags to its refined ready-to-wear collections, Celine continues to captivate audiences worldwide with its unique approach to luxury fashion."
+  },
+  {
+    "_id": "69616cec658774aaeaae1435",
+    "name": "MOSCHINO",
+    "linkToWebsite": "www.moschino.com",
+    "lastUpdated": 1684609636000,
+    "brandImage": "https://picsum.photos/seed/moschino/800/600",
+    "about": "Moschino is an Italian luxury fashion brand known for its playful and innovative designs. Founded in 1983 by Franco Moschino, the brand has become a symbol of irreverent style and creative expression. From its iconic teddy bear motifs to its bold runway shows, Moschino continues to captivate audiences worldwide with its unique approach to luxury fashion."
+  },
+  {
+    "_id": "69616cec658774aaeaae1436",
+    "name": "JIMMY CHOO",
+    "linkToWebsite": "www.jimmychoo.com",
+    "lastUpdated": 1684523236000,
+    "brandImage": "https://picsum.photos/seed/jimmychoo/800/600",
+    "about": "Jimmy Choo is a British luxury fashion brand known for its high-quality footwear and accessories. Founded in 1996 by Jimmy Choo and Tamara Mellon, the brand has become a symbol of glamour and sophistication. From its iconic stilettos to its elegant handbags, Jimmy Choo continues to captivate audiences worldwide with its refined approach to luxury fashion."
+  },
+  {
+    "_id": "69616cec658774aaeaae1437",
+    "name": "ISSEY MIYAKE",
+    "linkToWebsite": "www.isseymiyake.com",
+    "lastUpdated": 1684436836000,
+    "brandImage": "https://picsum.photos/seed/isseymiyake/800/600",
+    "about": "Issey Miyake is a Japanese luxury fashion brand known for its innovative designs and high-quality products. Founded in 1970 by Issey Miyake, the brand has become a symbol of creativity and modern elegance. From its iconic pleated garments to its groundbreaking runway shows, Issey Miyake continues to redefine the world of luxury fashion and captivate fashion enthusiasts worldwide."
+  },
+  {
+    "_id": "69616cec658774aaeaae1438",
+    "name": "KENZO",
+    "linkToWebsite": "www.kenzo.com",
+    "lastUpdated": 1684350436000,
+    "brandImage": "https://picsum.photos/seed/kenzo/800/600",
+    "about": "Kenzo is a French luxury fashion brand known for its vibrant and innovative designs. Founded in 1970 by Kenzo Takada, the brand has become a symbol of eclectic style and creative expression. From its iconic tiger motifs to its bold runway shows, Kenzo continues to captivate audiences worldwide with its unique approach to luxury fashion."
+  },
+  {
+    "_id": "69616cec658774aaeaae1439",
+    "name": "RALPH LAUREN",
+    "linkToWebsite": "www.ralphlauren.com",
+    "lastUpdated": 1684609636000,
+    "brandImage": "https://picsum.photos/seed/ralphlauren/800/600",
+    "about": "Ralph Lauren is an American luxury fashion brand known for its classic and timeless designs. Founded in 1967 by Ralph Lauren, the brand has become synonymous with elegance and sophistication. From its iconic polo shirts to its refined collections, Ralph Lauren continues to define the essence of American style and captivate fashion enthusiasts worldwide."
+  },
+  {
+    "_id": "69616cec658774aaeaae143a",
+    "name": "GIVENCHY",
+    "linkToWebsite": "www.givenchy.com",
+    "lastUpdated": 1684523236000,
+    "brandImage": "https://picsum.photos/seed/givenchy/800/600",
+    "about": "Givenchy is a French luxury fashion brand known for its innovative designs and high-quality products. Founded in 1952 by Hubert de Givenchy, the brand has become a symbol of elegance and sophistication. From its iconic Audrey Hepburn-inspired little black dress to its cutting-edge runway shows, Givenchy continues to redefine the world of luxury fashion and captivate fashion enthusiasts worldwide."
+  },
+  {
+    "_id": "69616cec658774aaeaae143b",
+    "name": "HERMÈS",
+    "linkToWebsite": "www.hermes.com",
+    "lastUpdated": 1684436836000,
+    "brandImage": "https://picsum.photos/seed/herms/800/600",
+    "about": "Hermès is a French luxury fashion brand known for its exquisite craftsmanship and timeless designs. Founded in 1837 by Thierry Hermès, the brand has become synonymous with luxury and sophistication. From its iconic Birkin and Kelly bags to its impeccable silk scarves, Hermès continues to captivate the world with its dedication to quality and elegance."
+  },
+  {
+    "_id": "69616cec658774aaeaae143c",
+    "name": "CALVIN KLEIN",
+    "linkToWebsite": "www.calvinklein.us/",
+    "lastUpdated": 1684350436000,
+    "brandImage": "https://picsum.photos/seed/calvinklein/800/600",
+    "about": "Calvin Klein is an American fashion brand known for its minimalistic and provocative designs. Founded in 1968 by Calvin Klein, the brand has become a symbol of modernity and sensuality. From its iconic underwear to its clean-cut collections, Calvin Klein continues to redefine the boundaries of fashion and captivate audiences worldwide."
+  },
+  {
+    "_id": "69616cec658774aaeaae143d",
+    "name": "TORY BURCH",
+    "linkToWebsite": "www.toryburch.com",
+    "lastUpdated": 1684264036000,
+    "brandImage": "https://picsum.photos/seed/toryburch/800/600",
+    "about": "Tory Burch is an American luxury fashion brand known for its feminine and bohemian designs. Founded in 2004 by Tory Burch, the brand has become synonymous with effortless style and versatility. From its iconic Reva flats to its chic accessories, Tory Burch continues to inspire women around the world with its unique approach to fashion."
+  },
+  {
+    "_id": "69616cec658774aaeaae143e",
+    "name": "GUERLAIN",
+    "linkToWebsite": "www.guerlain.com",
+    "lastUpdated": 1684609636000,
+    "brandImage": "https://picsum.photos/seed/guerlain/800/600",
+    "about": "Guerlain is a French luxury perfume, cosmetics, and skincare brand known for its exquisite fragrances and beauty products. Founded in 1828 by Pierre-François Pascal Guerlain, the brand has a rich heritage of craftsmanship and innovation. From its iconic Shalimar perfume to its luxurious skincare collections, Guerlain continues to captivate customers worldwide with its timeless elegance and exceptional quality."
+  },
+  {
+    "_id": "69616cec658774aaeaae143f",
+    "name": "HERMÈS",
+    "linkToWebsite": "www.hermes.com",
+    "lastUpdated": 1684523236000,
+    "brandImage": "https://picsum.photos/seed/herms/800/600",
+    "about": "Hermès is a French luxury fashion brand known for its iconic silk scarves, handbags, and accessories. Founded in 1837 by Thierry Hermès, the brand has a long-standing reputation for craftsmanship and timeless elegance. From its signature Birkin and Kelly bags to its exquisite silk designs, Hermès continues to be a symbol of luxury and refinement, captivating fashion enthusiasts worldwide."
+  },
+  {
+    "_id": "69616cec658774aaeaae1440",
+    "name": "JIMMY CHOO",
+    "linkToWebsite": "www.jimmychoo.com",
+    "lastUpdated": 1684436836000,
+    "brandImage": "https://picsum.photos/seed/jimmychoo/800/600",
+    "about": "Jimmy Choo is a British luxury fashion brand known for its glamorous shoes, handbags, and accessories. Founded in 1996 by Tamara Mellon and Jimmy Choo, the brand has gained international recognition for its exquisite craftsmanship and red-carpet appeal. From its iconic stiletto heels to its sophisticated clutch bags, Jimmy Choo continues to be a favorite among celebrities and fashion-conscious individuals."
+  },
+  {
+    "_id": "69616cec658774aaeaae1441",
+    "name": "RALPH LAUREN",
+    "linkToWebsite": "www.ralphlauren.com",
+    "lastUpdated": 1684350436000,
+    "brandImage": "https://picsum.photos/seed/ralphlauren/800/600",
+    "about": "Ralph Lauren is an American luxury fashion brand known for its classic and preppy style. Founded in 1967 by Ralph Lauren, the brand has become synonymous with refined elegance and timeless designs. From its iconic Polo shirts to its tailored suits, Ralph Lauren continues to embody the spirit of American fashion and inspire individuals around the world."
+  },
+  {
+    "_id": "69616cec658774aaeaae1442",
+    "name": "ALEXANDER WANG",
+    "linkToWebsite": "www.alexanderwang.com",
+    "lastUpdated": 1684264036000,
+    "brandImage": "https://picsum.photos/seed/alexanderwang/800/600",
+    "about": "Alexander"
+  },
+  {
+    "_id": "69616cec658774aaeaae1443",
+    "name": "CHANEL No. 22",
+    "linkToWebsite": "www.chanel.com",
+    "lastUpdated": 1684609636000,
+    "brandImage": "https://picsum.photos/seed/chanelno22/800/600",
+    "about": "CHANEL No. 22 is a luxurious fragrance line by Chanel, offering a unique blend of floral and woody notes. Inspired by the iconic No. 5 perfume, CHANEL No. 22 evokes a sense of sophistication and timeless elegance. From its elegant packaging to its captivating scent, CHANEL No. 22 continues the legacy of Chanel's exceptional perfumes."
+  },
+  {
+    "_id": "69616cec658774aaeaae1444",
+    "name": "GUCCI KIDS",
+    "linkToWebsite": "www.gucci.com",
+    "lastUpdated": 1684350436000,
+    "brandImage": "https://picsum.photos/seed/guccikids/800/600",
+    "about": "Gucci Kids is a renowned Italian luxury fashion brand offering stylish and playful designs for children. With a focus on quality and craftsmanship, Gucci Kids creates miniature versions of its iconic pieces, including clothing, accessories, and footwear. From mini-me looks to imaginative prints, Gucci Kids captures the spirit of childhood with a touch of luxury."
+  },
+  {
+    "_id": "69616cec658774aaeaae1445",
+    "name": "BALENCIAGA HOMME",
+    "linkToWebsite": "www.balenciaga.com",
+    "lastUpdated": 1684264036000,
+    "brandImage": "https://picsum.photos/seed/balenciagahomme/800/600",
+    "about": "Balenciaga Homme is the men's division of the Spanish luxury fashion brand"
+  },
+  {
+    "_id": "69616cec658774aaeaae1446",
+    "name": "BA&SH",
+    "linkToWebsite": "www.ba-sh.com",
+    "lastUpdated": 1684696036000,
+    "brandImage": "https://picsum.photos/seed/bash/800/600",
+    "about": "BA&SH is a French contemporary fashion brand known for its chic and feminine designs. Founded in 2003 by Barbara Boccara and Sharon Krief, the brand offers a modern and bohemian aesthetic, combining effortless style with Parisian elegance. From its versatile dresses to its timeless accessories, BA&SH continues to inspire women around the world with its sophisticated approach to fashion."
+  },
+  {
+    "_id": "69616cec658774aaeaae1447",
+    "name": "ACNE STUDIOS",
+    "linkToWebsite": "www.acnestudios.com",
+    "lastUpdated": 1684609636000,
+    "brandImage": "https://picsum.photos/seed/acnestudios/800/600",
+    "about": "Acne Studios is a Swedish fashion brand known for its minimalist and contemporary designs. Founded in 1996 by Jonny Johansson, the brand offers a unique blend of Scandinavian simplicity and urban coolness. From its clean-lined silhouettes to its high-quality fabrics, Acne Studios continues to redefine modern fashion with its understated yet distinctive style."
+  },
+  {
+    "_id": "69616cec658774aaeaae1448",
+    "name": "OFF-WHITE",
+    "linkToWebsite": "www.off---white.com",
+    "lastUpdated": 1684523236000,
+    "brandImage": "https://picsum.photos/seed/offwhite/800/600",
+    "about": "Off-White is an Italian streetwear-inspired fashion brand known for its bold designs and artistic influences. Founded in 2013 by Virgil Abloh, the brand combines street culture with high fashion, creating a unique and recognizable aesthetic. From its iconic diagonal stripes to its collaborations with renowned artists, Off-White continues to push boundaries and redefine contemporary fashion."
+  },
+  {
+    "_id": "69616cec658774aaeaae1449",
+    "name": "ROKSANDA",
+    "linkToWebsite": "www.roksanda.com",
+    "lastUpdated": 1684436836000,
+    "brandImage": "https://picsum.photos/seed/roksanda/800/600",
+    "about": "Roksanda is a British luxury fashion brand known for its vibrant colors and architectural designs. Founded in 2005 by Roksanda Ilincic, the brand offers a unique blend of modernity and femininity, creating sophisticated and statement-making pieces. From its sculptural silhouettes to its bold use of color, Roksanda continues to captivate fashion enthusiasts worldwide with its innovative approach to luxury fashion."
+  },
+  {
+    "_id": "69616cec658774aaeaae144a",
+    "name": "ISABEL MARANT",
+    "linkToWebsite": "www.isabelmarant.com",
+    "lastUpdated": 1684350436000,
+    "brandImage": "https://picsum.photos/seed/isabelmarant/800/600",
+    "about": "Isabel Marant is a French fashion brand known for its effortlessly cool and bohemian-inspired designs. Founded in 1994 by Isabel Marant, the brand offers a relaxed and modern approach to luxury fashion. From its iconic sneakers to its romantic dresses, Isabel Marant."
+  },
+  {
+    "_id": "69616cec658774aaeaae144b",
+    "name": "ZIMMERMANN",
+    "linkToWebsite": "www.zimmermann.com",
+    "lastUpdated": 1684264036000,
+    "brandImage": "https://picsum.photos/seed/zimmermann/800/600",
+    "about": "Zimmermann is an Australian luxury fashion brand known for its romantic and feminine designs. Founded in 1991 by sisters Nicky and Simone Zimmermann, the brand offers ethereal dresses, swimwear, and ready-to-wear collections that exude effortless elegance. From its intricate lace detailing to its flowing silhouettes, Zimmermann continues to enchant fashion lovers with its dreamy and sophisticated aesthetic."
+  },
+  {
+    "_id": "69616cec658774aaeaae144c",
+    "name": "MSGM",
+    "linkToWebsite": "www.msgm.it/",
+    "lastUpdated": 1684177636000,
+    "brandImage": "https://picsum.photos/seed/msgm/800/600",
+    "about": "MSGM is an Italian contemporary fashion brand known for its bold colors and vibrant prints. Founded in 2009 by Massimo Giorgetti, the brand offers eclectic and youthful designs that blend streetwear influences with high fashion. From its eye-catching patterns to its modern silhouettes, MSGM continues to make a statement with its playful and energetic approach to fashion."
+  },
+  {
+    "_id": "69616cec658774aaeaae144d",
+    "name": "ELLERY",
+    "linkToWebsite": "www.ellery.com",
+    "lastUpdated": 1684091236000,
+    "brandImage": "https://picsum.photos/seed/ellery/800/600",
+    "about": "Ellery is an Australian luxury fashion brand known for its avant-garde and sculptural designs. Founded in 2007 by Kym Ellery, the brand offers architectural silhouettes, exaggerated proportions, and intricate detailing that challenge traditional notions of fashion. From its statement sleeves to its bold use of fabrics, Ellery continues to push boundaries and redefine contemporary luxury."
+  },
+  {
+    "_id": "69616cec658774aaeaae144e",
+    "name": "SANDRO",
+    "linkToWebsite": "www.sandro-paris.com",
+    "lastUpdated": 1684004836000,
+    "brandImage": "https://picsum.photos/seed/sandro/800/600",
+    "about": "Sandro is a French fashion brand known for its chic and modern designs. Founded in 1984 by Evelyne Chétrite, the brand offers a mix of classic and contemporary styles, combining Parisian elegance with a touch of rock 'n' roll attitude. From its tailored blazers to its effortless dresses, Sandro continues to be a go-to brand for sophisticated and effortless fashion."
+  },
+  {
+    "_id": "69616cec658774aaeaae144f",
+    "name": "MARA HOFFMAN",
+    "linkToWebsite": "www.marahoffman.com",
+    "lastUpdated": 1683918436000,
+    "brandImage": "https://picsum.photos/seed/marahoffman/800/600",
+    "about": "Mara Hoffman is an American sustainable fashion brand known for its vibrant colors and ethical practices. Founded in 2000 by Mara Hoffman, the brand offers eco-conscious swimwear, ready-to-wear, and accessories that celebrate bold prints and unique patterns. From its commitment to fair trade to its use of eco-friendly materials, Mara Hoffman embodies a conscious approach to fashion."
+  },
+  {
+    "_id": "69616cec658774aaeaae1450",
+    "name": "MARNI",
+    "linkToWebsite": "www.marni.com",
+    "lastUpdated": 1683659236000,
+    "brandImage": "https://picsum.photos/seed/marni/800/600",
+    "about": "Marni is an Italian luxury fashion brand known for its artistic and unconventional designs. Founded in 1994 by Consuelo Castiglioni, the brand offers unique prints, unexpected textures, and experimental shapes that challenge traditional fashion norms. From its avant-garde accessories to its playful approach to color, Marni continues to captivate with its whimsical and offbeat style."
+  },
+  {
+    "_id": "69616cec658774aaeaae1451",
+    "name": "OFF-WHITE",
+    "linkToWebsite": "www.off---white.com",
+    "lastUpdated": 1683572836000,
+    "brandImage": "https://picsum.photos/seed/offwhite/800/600",
+    "about": "Off-White is an Italian luxury streetwear brand known for its urban and industrial-inspired designs. Founded in 2012 by Virgil Abloh, the brand offers a fusion of high fashion and street culture, combining graphic prints, bold branding, and deconstructed silhouettes. From its iconic arrow logo to its collaborations with renowned artists, Off-White continues to push boundaries and redefine contemporary streetwear."
+  },
+  {
+    "_id": "69616cec658774aaeaae1452",
+    "name": "RAG & BONE",
+    "linkToWebsite": "www.rag-bone.com",
+    "lastUpdated": 1683486436000,
+    "brandImage": "https://picsum.photos/seed/ragbone/800/600",
+    "about": "Rag & Bone is an American fashion brand known for its effortless and urban-inspired designs. Founded in 2002 by Marcus Wainwright and David Neville, the brand offers a mix of classic tailoring, utilitarian elements, and modern aesthetics. From its well-crafted denim pieces to its refined outerwear, Rag & Bone combines British heritage with a downtown New York sensibility."
+  }
+]

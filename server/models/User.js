@@ -9,7 +9,7 @@ const UserSchema = new mongoose.Schema(
       trim: true,
       min: 2,
       max: 20,
-      index: true // For faster queries
+      index: true
     },
     name: {
       type: String,
@@ -25,7 +25,7 @@ const UserSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
       max: 100,
-      index: true // For faster queries
+      index: true
     },
     password: {
       type: String,
@@ -56,7 +56,6 @@ const UserSchema = new mongoose.Schema(
       required: false,
       max: 100,
     },
-    // Social media handles
     socialMedia: {
       instagram: {
         type: String,
@@ -79,25 +78,22 @@ const UserSchema = new mongoose.Schema(
         default: ""
       }
     },
-    // Brands the user follows (references to Brand documents)
+    // Changed to String array instead of ObjectId array for JSON compatibility
     followedBrands: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Brand'
+      type: String,
+      default: []
     }],
-    // Users this user follows
     following: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     }],
-    // Users who follow this user
     followers: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     }],
-    // Mobile-specific fields
     pushToken: {
       type: String,
-      default: null // For push notifications (FCM token)
+      default: null
     },
     notificationSettings: {
       merchandiseDrops: {
@@ -127,29 +123,24 @@ const UserSchema = new mongoose.Schema(
     }
   },
   { 
-    timestamps: true // Creates createdAt and updatedAt automatically
+    timestamps: true
   }
 );
 
-// Index for text search on username and name
 UserSchema.index({ userName: 'text', name: 'text' });
 
-// Virtual for follower count
 UserSchema.virtual('followerCount').get(function() {
   return this.followers.length;
 });
 
-// Virtual for following count
 UserSchema.virtual('followingCount').get(function() {
   return this.following.length;
 });
 
-// Virtual for followed brands count
 UserSchema.virtual('followedBrandsCount').get(function() {
   return this.followedBrands.length;
 });
 
-// Ensure virtuals are included when converting to JSON
 UserSchema.set('toJSON', { virtuals: true });
 UserSchema.set('toObject', { virtuals: true });
 
