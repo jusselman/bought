@@ -78,10 +78,10 @@ const UserSchema = new mongoose.Schema(
         default: ""
       }
     },
-    // Changed to String array instead of ObjectId array for JSON compatibility
+    // Now using proper ObjectIds since brand IDs are ObjectIds
     followedBrands: [{
-      type: String,
-      default: []
+      type: mongoose.Schema.Types.ObjectId,
+      // No ref since brands are in JSON for now, but ready for MongoDB migration
     }],
     following: [{
       type: mongoose.Schema.Types.ObjectId,
