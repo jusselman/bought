@@ -57,77 +57,45 @@ const ProfileScreen = () => {
   };
 
   const handleSave = async () => {
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      // If there's a profile image, we need multipart/form-data
-      if (profileImage) {
-        const formDataObj = new FormData();
-        
-        formDataObj.append('name', formData.name);
-        formDataObj.append('userName', formData.userName);
-        formDataObj.append('bio', formData.bio);
-        formDataObj.append('city', formData.city);
-        formDataObj.append('website', formData.website);
-        
-        formDataObj.append('socialMedia', JSON.stringify({
-          instagram: formData.instagram,
-          tiktok: formData.tiktok,
-          facebook: formData.facebook,
-          twitter: formData.twitter,
-        }));
+  try {
+    let response;
+    
+    if (profileImage) {
+      const formDataObj = new FormData();
+      
+      formDataObj.append('name', formData.name);
+      formDataObj.append('userName', formData.userName);
+      formDataObj.append('bio', formData.bio);
+      formDataObj.append('city', formData.city);
+      formDataObj.append('website', formData.website);
+      
+      formDataObj.append('socialMedia', JSON.stringify({
+        instagram: formData.instagram,
+        tiktok: formData.tiktok,
+        facebook: formData.facebook,
+        twitter: formData.twitter,
+      }));
 
-        const uriParts = profileImage.uri.split('.');
-        const fileType = uriParts[uriParts.length - 1];
+      const uriParts = profileImage.uri.split('.');
+      const fileType = uriParts[uriParts.length - 1];
 
-        formDataObj.append('picture', {
-          uri: profileImage.uri,
-          name: `profile_${user._id}.${fileType}`,
-          type: `image/${fileType}`,
-        });
-        formDataObj.append('picturePath', `profile_${user._id}.${fileType}`);
+      formDataObj.append('picture', {
+        uri: profileImage.uri,
+        name: `profile_${user._id}.${fileType}`,
+        type: `image/${fileType}`,
+      });
+      // ✅ REMOVED: formDataObj.append('picturePath', `profile_${user._id}.${fileType}`);
 
-        const response = await api.patch(`/users/${user._id}`, formDataObj, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-
-        if (response.data.success) {
-          dispatch(updateUser(response.data.user));
-          setIsEditing(false);
-          setProfileImage(null);
-          Alert.alert('Success', 'Profile updated successfully');
-        }
-      } else {
-        // No image - send as JSON
-        const response = await api.patch(`/users/${user._id}`, {
-          name: formData.name,
-          userName: formData.userName,
-          bio: formData.bio,
-          city: formData.city,
-          website: formData.website,
-          socialMedia: {
-            instagram: formData.instagram,
-            tiktok: formData.tiktok,
-            facebook: formData.facebook,
-            twitter: formData.twitter,
-          },
-        });
-
-        if (response.data.success) {
-          dispatch(updateUser(response.data.user));
-          setIsEditing(false);
-          Alert.alert('Success', 'Profile updated successfully');
-        }
-      }
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      Alert.alert('Error', error.response?.data?.message || 'Failed to update profile');
-    } finally {
-      setLoading(false);
+      response = await api.patch(`/users/${user._id}`, formDataObj, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    } else {
+      // ... rest of your code
     }
-  };
 
   const handleCancel = () => {
     setFormData({

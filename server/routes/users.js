@@ -1,4 +1,6 @@
 import express from "express";
+import multer from "multer"; 
+import path from "path"; 
 import {
   getUser,
   getUserFollowers,
@@ -15,6 +17,16 @@ import { validateObjectId, sanitizeInput } from "../middleware/validation.js";
 
 const router = express.Router();
 
+// ✅ ADD MULTER CONFIGURATION
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/assets");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage });
 /* READ - Get user by ID */
 router.get(
   "/:id",
@@ -79,6 +91,7 @@ router.patch(
   validateObjectId('id'),
   verifyToken,
   verifyOwnership('id'),
+  upload.single("picture"), 
   sanitizeInput,
   updateUser
 );

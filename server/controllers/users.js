@@ -8,7 +8,6 @@ export const getUser = async (req, res) => {
     const { id } = req.params;
     const user = await User.findById(id)
       .select('-password')
-      .populate('followedBrands', 'name logoPath')
       .populate('followers', 'userName name picturePath')
       .populate('following', 'userName name picturePath');
     
@@ -91,10 +90,7 @@ export const getUserFollowing = async (req, res) => {
 export const getUserBrands = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findById(id).populate(
-      'followedBrands',
-      'name logoPath category websiteUrl followerCount'
-    );
+    const user = await User.findById(id);
 
     if (!user) {
       return res.status(404).json({ 
@@ -140,7 +136,6 @@ export const followUser = async (req, res) => {
     const isFollowing = user.following.includes(targetUserId);
 
     if (isFollowing) {
-      // Unfollow
       user.following = user.following.filter(
         (uid) => uid.toString() !== targetUserId
       );
@@ -148,7 +143,6 @@ export const followUser = async (req, res) => {
         (uid) => uid.toString() !== id
       );
     } else {
-      // Follow
       user.following.push(targetUserId);
       targetUser.followers.push(id);
     }
@@ -156,7 +150,6 @@ export const followUser = async (req, res) => {
     await user.save();
     await targetUser.save();
 
-    // Return updated following list
     const updatedUser = await User.findById(id).populate(
       'following',
       'userName name bio city picturePath'
@@ -182,7 +175,6 @@ export const followBrand = async (req, res) => {
     const { brandId } = req.body;
 
     const user = await User.findById(userId);
-    const brand = await Brand.findById(brandId);
 
     if (!user) {
       return res.status(404).json({ 
@@ -191,44 +183,24 @@ export const followBrand = async (req, res) => {
       });
     }
 
-    if (!brand) {
-      return res.status(404).json({ 
-        success: false,
-        message: "Brand not found" 
-      });
-    }
-
     const isFollowing = user.followedBrands.some(
       (id) => id.toString() === brandId
     );
 
     if (isFollowing) {
-      // Unfollow brand
       user.followedBrands = user.followedBrands.filter(
         (id) => id.toString() !== brandId
       );
-      brand.followers = brand.followers.filter(
-        (id) => id.toString() !== userId
-      );
     } else {
-      // Follow brand
       user.followedBrands.push(brandId);
-      brand.followers.push(userId);
     }
 
     await user.save();
-    await brand.save();
-
-    // Return updated brands list
-    const updatedUser = await User.findById(userId).populate(
-      'followedBrands',
-      'name logoPath category'
-    );
 
     res.status(200).json({
       success: true,
       message: isFollowing ? "Brand unfollowed" : "Brand followed",
-      brands: updatedUser.followedBrands
+      followedBrands: user.followedBrands
     });
   } catch (err) {
     res.status(500).json({ 
@@ -242,7 +214,11 @@ export const followBrand = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const userUpdates = req.body;
+    let userUpdates = { ...req.body };
+
+    console.log('Received update request for user:', id);
+    console.log('Update data:', userUpdates);
+    console.log('File:', req.file); // Log the uploaded file
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ 
@@ -251,12 +227,30 @@ export const updateUser = async (req, res) => {
       });
     }
 
+    // Handle file upload
+    if (req.file) {
+      userUpdates.picturePath = req.file.filename;
+      console.log('Profile picture uploaded:', req.file.filename);
+    }
+
     // Don't allow updating sensitive fields
     delete userUpdates.password;
     delete userUpdates.email;
     delete userUpdates.followers;
     delete userUpdates.following;
     delete userUpdates.followedBrands;
+    delete userUpdates.picture; // Remove the file object itself
+
+    // Handle socialMedia updates properly
+    if (userUpdates.socialMedia) {
+      if (typeof userUpdates.socialMedia === 'string') {
+        try {
+          userUpdates.socialMedia = JSON.parse(userUpdates.socialMedia);
+        } catch (e) {
+          console.error('Error parsing socialMedia:', e);
+        }
+      }
+    }
 
     const updatedUser = await User.findByIdAndUpdate(
       id,
@@ -271,12 +265,15 @@ export const updateUser = async (req, res) => {
       });
     }
 
+    console.log('User updated successfully:', updatedUser);
+
     res.status(200).json({
       success: true,
       message: "User updated successfully",
       user: updatedUser
     });
   } catch (err) {
+    console.error('Update user error:', err);
     res.status(500).json({ 
       success: false,
       message: err.message 
