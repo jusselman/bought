@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   View,
   Text,
@@ -19,6 +19,7 @@ import api from '../../services/api';
 const ProfileScreen = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
+
   
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -86,16 +87,46 @@ const ProfileScreen = () => {
         name: `profile_${user._id}.${fileType}`,
         type: `image/${fileType}`,
       });
-      // ✅ REMOVED: formDataObj.append('picturePath', `profile_${user._id}.${fileType}`);
-
       response = await api.patch(`/users/${user._id}`, formDataObj, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
     } else {
-      // ... rest of your code
+      response = await api.patch(`/users/${user._id}`, {
+        name: formData.name,
+        userName: formData.userName,
+        bio: formData.bio,
+        city: formData.city,
+        website: formData.website,
+        socialMedia: {
+          instagram: formData.instagram,
+          tiktok: formData.tiktok,
+          facebook: formData.facebook,
+          twitter: formData.twitter,
+        },
+      });
     }
+
+    console.log('📝 FULL UPDATE RESPONSE:', JSON.stringify(response.data, null, 2));
+
+    if (response.data && response.data.user) {
+      console.log('✅ USER DATA RECEIVED:', response.data.user);
+      dispatch(updateUser(response.data.user));
+      setIsEditing(false);
+      setProfileImage(null);
+      Alert.alert('Success', 'Profile updated successfully');
+    } else {
+      console.log('⚠️ UNEXPECTED RESPONSE STRUCTURE:', response.data);
+      Alert.alert('Warning', 'Update may have succeeded but response was unexpected');
+    }
+  } catch (error) {
+    console.error('❌ Error updating profile:', error);
+    Alert.alert('Error', error.response?.data?.message || 'Failed to update profile');
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleCancel = () => {
     setFormData({
@@ -145,19 +176,21 @@ const ProfileScreen = () => {
       <Text style={styles.userName}>@{user?.userName}</Text>
 
       <View style={styles.statsContainer}>
-        <View style={styles.statItem}>
-          <Text style={styles.statNumber}>{user?.followerCount || 0}</Text>
-          <Text style={styles.statLabel}>Followers</Text>
-        </View>
-        <View style={styles.statItem}>
-          <Text style={styles.statNumber}>{user?.followingCount || 0}</Text>
-          <Text style={styles.statLabel}>Following</Text>
-        </View>
-        <View style={styles.statItem}>
-          <Text style={styles.statNumber}>{user?.followedBrandsCount || 0}</Text>
-          <Text style={styles.statLabel}>Brands</Text>
-        </View>
+      <View style={styles.statItem}>
+        <Text style={styles.statNumber}>{user?.followerCount || 0}</Text>
+        <Text style={styles.statLabel}>Followers</Text>
       </View>
+      <View style={styles.statItem}>
+        <Text style={styles.statNumber}>{user?.followingCount || 0}</Text>
+        <Text style={styles.statLabel}>Following</Text>
+      </View>
+      <View style={styles.statItem}>
+        <Text style={styles.statNumber}>
+          {user?.followedBrands?.length || 0}
+        </Text>
+        <Text style={styles.statLabel}>Brands</Text>
+      </View>
+    </View>
 
       {user?.bio && (
         <View style={styles.section}>

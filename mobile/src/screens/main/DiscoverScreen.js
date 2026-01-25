@@ -66,27 +66,27 @@ const DiscoverScreen = ({ navigation }) => {
   };
 
   const handleFollowToggle = async (brandId) => {
-    if (followingInProgress[brandId]) return;
+  if (followingInProgress[brandId]) return;
 
-    setFollowingInProgress({ ...followingInProgress, [brandId]: true });
+  setFollowingInProgress({ ...followingInProgress, [brandId]: true });
 
-    try {
-      const response = await api.post(`/brands/user/${user._id}/follow`, {
-        brandId,
-      });
+  try {
+    const response = await api.post(`/users/${user._id}/brands/follow`, {
+      brandId,
+    });
 
-      if (response.data.success) {
-        dispatch(updateUser({
-          followedBrands: response.data.followedBrands,
-        }));
-      }
-    } catch (error) {
-      console.error('Error following brand:', error);
-      Alert.alert('Error', 'Failed to update brand follow status');
-    } finally {
-      setFollowingInProgress({ ...followingInProgress, [brandId]: false });
+    if (response.data.success) {
+      dispatch(updateUser({
+        followedBrands: response.data.followedBrands,
+      }));
     }
-  };
+  } catch (error) {
+    console.error('Error following brand:', error);
+    Alert.alert('Error', 'Failed to update brand follow status');
+  } finally {
+    setFollowingInProgress({ ...followingInProgress, [brandId]: false });
+  }
+};
 
   const handleBrandPress = (brandId) => {
     navigation.navigate('BrandDetail', { brandId });
