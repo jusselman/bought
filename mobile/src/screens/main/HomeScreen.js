@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -18,8 +18,8 @@ import api from '../../services/api';
 import PostCard from '../../components/posts/PostCard';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
-const HEADER_HEIGHT = 97; // paddingTop 60 + paddingBottom 16 + text height ~21
-const TAB_BAR_HEIGHT = 85; // From AppNavigator
+const HEADER_HEIGHT = 97; 
+const TAB_BAR_HEIGHT = 85; 
 
 const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -39,6 +39,9 @@ const HomeScreen = ({ navigation }) => {
       const response = await api.get(`/posts?page=${pageNum}&limit=20`);
       
       if (response.data.success) {
+         console.log('🏠 Posts received:', response.data.posts.length); // ✅ ADD THIS
+      console.log('🏠 First post:', response.data.posts[0]); // ✅ ADD THIS
+
         if (pageNum === 1) {
           dispatch(setPosts(response.data.posts));
         } else {
@@ -88,6 +91,11 @@ const HomeScreen = ({ navigation }) => {
         },
       ]
     );
+  };
+
+  // Handle create post navigation
+  const handleCreatePost = () => {
+    navigation.navigate('CreatePost');
   };
 
   const renderPost = ({ item }) => (
@@ -161,6 +169,15 @@ const HomeScreen = ({ navigation }) => {
           posts.length === 0 ? styles.emptyListContent : styles.listContent
         }
       />
+
+      {/* Floating Action Button for Create Post */}
+      <TouchableOpacity
+        style={styles.fab}
+        onPress={handleCreatePost}
+        activeOpacity={0.8}
+      >
+        <Ionicons name="add" size={28} color="#FFF" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -198,10 +215,10 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   listContent: {
-    paddingBottom: 100, // Extra padding for tab bar
+    paddingBottom: 100, 
   },
   emptyListContent: {
-    flexGrow: 0, // Don't stretch to fill
+    flexGrow: 0, 
   },
   emptyContainer: {
     justifyContent: 'center',
@@ -223,6 +240,22 @@ const styles = StyleSheet.create({
   footerLoader: {
     paddingVertical: 20,
     alignItems: 'center',
+  },
+  fab: {
+    position: 'absolute',
+    right: 20,
+    bottom: 100, 
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
 });
 

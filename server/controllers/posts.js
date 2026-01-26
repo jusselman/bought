@@ -7,12 +7,15 @@ export const createPost = async (req, res) => {
   try {
     const { 
       userId, 
-      description, 
+      description,
+      brandId, // for brand posts
       subheading, 
-      imagePath,
       releaseId,
       hashtags 
     } = req.body;
+
+    console.log('📝 Creating post with data:', req.body);
+    console.log('📸 File received:', req.file);
     
     const user = await User.findById(userId);
     
@@ -23,14 +26,30 @@ export const createPost = async (req, res) => {
       });
     }
 
+    // Validation
+    if (!description) {
+      return res.status(400).json({
+        success: false,
+        message: "Description is required"
+      });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "Image is required"
+      });
+    }
+
     const newPost = new Post({
       userId,
       userName: user.userName,
       userPicturePath: user.picturePath,
       description,
       subheading: subheading || "",
-      imagePath: imagePath || "",
+      imagePath: req.file.filename, //  Use the uploaded file's filename
       releaseId: releaseId || null,
+      brandId: brandId || null, // store brandId if provided
       hashtags: hashtags || [],
       likes: {},
       comments: [],
@@ -42,6 +61,8 @@ export const createPost = async (req, res) => {
     const populatedPost = await Post.findById(newPost._id)
       .populate('userId', 'userName picturePath')
       .populate('releaseId', 'name images brandId');
+
+    console.log('✅ Post created successfully:', populatedPost);
 
     res.status(201).json({
       success: true,

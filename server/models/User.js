@@ -130,15 +130,15 @@ const UserSchema = new mongoose.Schema(
 UserSchema.index({ userName: 'text', name: 'text' });
 
 UserSchema.virtual('followerCount').get(function() {
-  return this.followers.length;
+  return this.followers?.length || 0;
 });
 
 UserSchema.virtual('followingCount').get(function() {
-  return this.following.length;
+  return this.following?.length || 0;
 });
 
 UserSchema.virtual('followedBrandsCount').get(function() {
-  return this.followedBrands.length;
+  return this.followedBrands?.length || 0;
 });
 
 UserSchema.set('toJSON', { virtuals: true });

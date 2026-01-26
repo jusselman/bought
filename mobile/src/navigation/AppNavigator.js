@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -13,6 +12,7 @@ import DiscoverScreen from '../screens/main/DiscoverScreen';
 import ReleasesScreen from '../screens/main/ReleasesScreen';
 import ProfileScreen from '../screens/main/ProfileScreen';
 import BrandDetailScreen from '../screens/main/BrandDetailScreen';
+import CreatePostScreen from '../screens/main/CreatePostScreen'; 
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -35,7 +35,7 @@ const DiscoverStack = () => {
   );
 };
 
-const MainNavigator = () => {
+const TabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -80,6 +80,25 @@ const MainNavigator = () => {
       <Tab.Screen name="Releases" component={ReleasesScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
+  );
+};
+
+const MainNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {/* Main tabs */}
+      <Stack.Screen name="MainTabs" component={TabNavigator} />
+      
+      {/* Modal screens accessible from any tab */}
+      <Stack.Screen 
+        name="CreatePost" 
+        component={CreatePostScreen}
+        options={{
+          presentation: 'modal', // Makes it slide up from bottom on iOS
+          animation: 'slide_from_bottom',
+        }}
+      />
+    </Stack.Navigator>
   );
 };
 

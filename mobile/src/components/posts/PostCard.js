@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, memo } from 'react';
 import {
   View,
   Text,
@@ -16,6 +16,7 @@ import moment from 'moment';
 const PostCard = ({ post, onPress, onUserPress }) => {
   const dispatch = useDispatch();
   const loggedInUserId = useSelector((state) => state.auth.user._id);
+  const [imageError, setImageError] = useState(false);
   
   const isLiked = post.likes?.[loggedInUserId] || false;
   const likeCount = post.likes ? Object.keys(post.likes).length : 0;
@@ -40,8 +41,11 @@ const PostCard = ({ post, onPress, onUserPress }) => {
     return moment(createdAt).fromNow();
   };
 
+  const imageUrl = `http://10.0.0.151:6001/assets/${post.imagePath}`;
+
   return (
     <View style={styles.container}>
+      {/* User Info Header */}
       <TouchableOpacity 
         style={styles.header}
         onPress={() => onUserPress?.(post.userId)}
@@ -49,7 +53,7 @@ const PostCard = ({ post, onPress, onUserPress }) => {
         <Image
           source={{
             uri: post.userPicturePath
-              ? `http://localhost:6001/assets/${post.userPicturePath}`
+              ? `http://10.0.0.151:6001/assets/${post.userPicturePath}`
               : 'https://via.placeholder.com/40',
           }}
           style={styles.avatar}
@@ -60,23 +64,38 @@ const PostCard = ({ post, onPress, onUserPress }) => {
         </View>
       </TouchableOpacity>
 
+      {/* Post Content */}
       <TouchableOpacity onPress={() => onPress?.(post._id)}>
         {post.subheading && (
           <Text style={styles.subheading}>{post.subheading}</Text>
         )}
         <Text style={styles.description}>{post.description}</Text>
 
+        {/* Post Image with Error Handling */}
         {post.imagePath && (
-          <Image
-            source={{
-              uri: `http://localhost:6001/assets/${post.imagePath}`,
-            }}
-            style={styles.postImage}
-            resizeMode="cover"
-          />
+          <View>
+            {imageError ? (
+              <View style={styles.errorContainer}>
+                <Ionicons name="image-outline" size={48} color="#999" />
+                <Text style={styles.errorText}>Failed to load image</Text>
+                <Text style={styles.errorUrl}>{post.imagePath}</Text>
+              </View>
+            ) : (
+              <Image
+                source={{ uri: imageUrl }}
+                style={styles.postImage}
+                resizeMode="cover"
+                onError={() => {
+                  console.log('Image failed:', imageUrl);
+                  setImageError(true);
+                }}
+              />
+            )}
+          </View>
         )}
       </TouchableOpacity>
 
+      {/* Actions Bar */}
       <View style={styles.actionsBar}>
         <TouchableOpacity 
           style={styles.actionButton}
@@ -157,6 +176,25 @@ const styles = StyleSheet.create({
     height: 300,
     backgroundColor: '#F0F0F0',
   },
+  errorContainer: {
+    width: '100%',
+    height: 300,
+    backgroundColor: '#F8F8F8',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+  },
+  errorText: {
+    fontSize: 14,
+    color: '#999',
+    marginTop: 12,
+  },
+  errorUrl: {
+    fontSize: 12,
+    color: '#666',
+    marginTop: 4,
+  },
   actionsBar: {
     flexDirection: 'row',
     paddingHorizontal: 12,
@@ -181,4 +219,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostCard;
+export default memo(PostCard);

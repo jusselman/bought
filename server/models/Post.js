@@ -81,6 +81,12 @@ const PostSchema = mongoose.Schema(
       type: String,
       default: ""
     },
+    // Brand reference
+    brandId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Brand',
+      default: null
+    },
     // Related release (optional)
     releaseId: {
       type: mongoose.Schema.Types.ObjectId,
