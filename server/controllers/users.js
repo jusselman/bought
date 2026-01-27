@@ -318,21 +318,22 @@ export const searchUsers = async (req, res) => {
   try {
     const { query } = req.query;
 
-    if (!query) {
-      return res.status(400).json({ 
-        success: false,
-        message: "Search query is required" 
-      });
-    }
+    let searchQuery = {};
 
-    const users = await User.find({
-      $or: [
-        { userName: { $regex: query, $options: 'i' } },
-        { name: { $regex: query, $options: 'i' } }
-      ]
-    })
-    .select('userName name picturePath bio')
-    .limit(20);
+    // If query is provided, search by username or name
+    if (query && query.trim()) {
+      searchQuery = {
+        $or: [
+          { userName: { $regex: query, $options: 'i' } },
+          { name: { $regex: query, $options: 'i' } }
+        ]
+      };
+    }
+    // If no query, return all users 
+
+    const users = await User.find(searchQuery)
+      .select('userName name picturePath bio')
+      .limit(50); // Limit to 50 users to avoid performance issues
 
     res.status(200).json({
       success: true,

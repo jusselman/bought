@@ -1,4 +1,5 @@
 import { useState, memo } from 'react';
+import { getImageUrl, getAvatarUrl } from '../../utils/imageUtils';
 import {
   View,
   Text,
@@ -51,11 +52,7 @@ const PostCard = ({ post, onPress, onUserPress }) => {
         onPress={() => onUserPress?.(post.userId)}
       >
         <Image
-          source={{
-            uri: post.userPicturePath
-              ? `http://10.0.0.151:6001/assets/${post.userPicturePath}`
-              : 'https://via.placeholder.com/40',
-          }}
+          source={{ uri: getAvatarUrl(post.userPicturePath) }}
           style={styles.avatar}
         />
         <View style={styles.userInfo}>
@@ -82,11 +79,11 @@ const PostCard = ({ post, onPress, onUserPress }) => {
               </View>
             ) : (
               <Image
-                source={{ uri: imageUrl }}
+                source={{ uri: getImageUrl(post.imagePath) }}
                 style={styles.postImage}
                 resizeMode="cover"
                 onError={() => {
-                  console.log('Image failed:', imageUrl);
+                  console.log('Image failed:', getImageUrl(post.imagePath));
                   setImageError(true);
                 }}
               />

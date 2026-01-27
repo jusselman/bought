@@ -17,7 +17,7 @@ import { validateObjectId, sanitizeInput } from "../middleware/validation.js";
 
 const router = express.Router();
 
-// ✅ ADD MULTER CONFIGURATION
+// ADD MULTER CONFIGURATION
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/assets");

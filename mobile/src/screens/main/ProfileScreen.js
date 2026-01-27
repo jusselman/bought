@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 import {
   View,
   Text,
@@ -11,6 +13,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { getAvatarUrl } from '../../utils/imageUtils';
 import { useDispatch, useSelector } from 'react-redux';
 import * as ImagePicker from 'expo-image-picker';
 import { updateUser, setLogout } from '../../redux/slices/authSlice';
@@ -20,7 +23,6 @@ const ProfileScreen = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
 
-  
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
@@ -36,6 +38,23 @@ const ProfileScreen = () => {
     facebook: user?.socialMedia?.facebook || '',
     twitter: user?.socialMedia?.twitter || '',
   });
+
+  useFocusEffect(
+    useCallback(() => {
+      const fetchUserData = async () => {
+        try {
+          const response = await api.get(`/users/${user._id}`);
+          if (response.data.success) {
+            dispatch(updateUser(response.data.user));
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+      
+      fetchUserData();
+    }, [user._id])
+  );
 
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -162,12 +181,8 @@ const ProfileScreen = () => {
   const renderViewMode = () => (
     <>
       <View style={styles.imageContainer}>
-        <Image
-          source={{
-            uri: user?.picturePath
-              ? `http://10.0.0.151:6001/assets/${user.picturePath}`
-              : 'https://via.placeholder.com/150',
-          }}
+       <Image
+          source={{ uri: getAvatarUrl(user?.picturePath) }}
           style={styles.profileImage}
         />
       </View>
@@ -267,10 +282,7 @@ const ProfileScreen = () => {
       <TouchableOpacity style={styles.imageContainer} onPress={pickImage}>
         <Image
           source={{
-            uri: profileImage?.uri || 
-              (user?.picturePath 
-                ? `http://10.0.0.151:6001/assets/${user.picturePath}`
-                : 'https://via.placeholder.com/150'),
+            uri: profileImage?.uri || getAvatarUrl(user?.picturePath)
           }}
           style={styles.profileImage}
         />

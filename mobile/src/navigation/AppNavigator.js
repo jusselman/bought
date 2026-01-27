@@ -13,6 +13,7 @@ import ReleasesScreen from '../screens/main/ReleasesScreen';
 import ProfileScreen from '../screens/main/ProfileScreen';
 import BrandDetailScreen from '../screens/main/BrandDetailScreen';
 import CreatePostScreen from '../screens/main/CreatePostScreen'; 
+import SearchUsersScreen from '../screens/main/SearchUsersScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -98,6 +99,7 @@ const MainNavigator = () => {
           animation: 'slide_from_bottom',
         }}
       />
+      <Stack.Screen name="SearchUsers" component={SearchUsersScreen} />
     </Stack.Navigator>
   );
 };

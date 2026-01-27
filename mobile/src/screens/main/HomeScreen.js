@@ -34,28 +34,29 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   const fetchPosts = async (pageNum = 1) => {
-    try {
-      dispatch(setLoading(true));
-      const response = await api.get(`/posts?page=${pageNum}&limit=20`);
-      
-      if (response.data.success) {
-         console.log('🏠 Posts received:', response.data.posts.length); // ✅ ADD THIS
-      console.log('🏠 First post:', response.data.posts[0]); // ✅ ADD THIS
+  try {
+    dispatch(setLoading(true));
+    // ✅ ADD userId parameter to filter by followed users
+    const response = await api.get(`/posts?page=${pageNum}&limit=20&userId=${user._id}`);
+    
+    if (response.data.success) {
+      console.log('Posts received:', response.data.posts.length);
+      console.log('First post:', response.data.posts[0]);
 
-        if (pageNum === 1) {
-          dispatch(setPosts(response.data.posts));
-        } else {
-          dispatch(setPosts([...posts, ...response.data.posts]));
-        }
+      if (pageNum === 1) {
+        dispatch(setPosts(response.data.posts));
+      } else {
+        dispatch(setPosts([...posts, ...response.data.posts]));
       }
-    } catch (error) {
-      console.error('Error fetching posts:', error);
-      Alert.alert('Error', 'Failed to load posts');
-    } finally {
-      setLoadingState(false);
-      dispatch(setLoading(false));
     }
-  };
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    Alert.alert('Error', 'Failed to load posts');
+  } finally {
+    setLoadingState(false);
+    dispatch(setLoading(false));
+  }
+};
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -109,8 +110,8 @@ const HomeScreen = ({ navigation }) => {
   const renderHeader = () => (
     <View style={styles.header}>
       <Text style={styles.logo}>BOUGHT</Text>
-      <TouchableOpacity onPress={handleLogout}>
-        <Ionicons name="log-out-outline" size={24} color="#000" />
+      <TouchableOpacity onPress={() => navigation.navigate('SearchUsers')}>
+        <Ionicons name="search" size={24} color="#000" />
       </TouchableOpacity>
     </View>
   );

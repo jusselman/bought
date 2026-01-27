@@ -107,7 +107,7 @@ const RegisterScreen = ({ navigation }) => {
     console.error('Error Message:', error.message);
     Alert.alert('Error', error.message || 'Something went wrong');
   }
-  setLoading(false);  // Add this to reset loading state on error
+  setLoading(false);  // Reset loading state on error
 } finally {
       setLoading(false);
     }

@@ -81,17 +81,32 @@ export const createPost = async (req, res) => {
 /* READ - Get Feed Posts */
 export const getFeedPosts = async (req, res) => {
   try {
-    const { page = 1, limit = 20 } = req.query;
+    const { page = 1, limit = 20, userId } = req.query;
     const skip = (page - 1) * limit;
 
-    const posts = await Post.find({ isPublic: true })
+    let query = { isPublic: true };
+
+    // If userId is provided, filter to show only posts from users they follow
+    if (userId) {
+      const user = await User.findById(userId);
+      
+      if (user) {
+        // Get posts from users the current user is following (plus their own posts)
+        const followedUserIds = [...user.following, userId];
+        query.userId = { $in: followedUserIds };
+        
+        console.log(`📱 Filtering feed for user ${userId}, showing ${followedUserIds.length} users`);
+      }
+    }
+
+    const posts = await Post.find(query)
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(parseInt(limit))
       .populate('userId', 'userName picturePath')
       .populate('releaseId', 'name images brandId');
 
-    const total = await Post.countDocuments({ isPublic: true });
+    const total = await Post.countDocuments(query);
 
     res.status(200).json({
       success: true,
