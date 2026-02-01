@@ -3,9 +3,6 @@ export const createPost = async (req, res) => {
   try {
     const { userId, brandId, description } = req.body;
 
-    console.log('📝 Creating post with data:', { userId, brandId, description });
-    console.log('📸 File received:', req.file);
-
     // Validation
     if (!userId || !brandId || !description) {
       return res.status(400).json({
@@ -37,8 +34,6 @@ export const createPost = async (req, res) => {
     const populatedPost = await Post.findById(newPost._id)
       .populate('userId', 'userName name picturePath')
       .populate('brandId', 'name');
-
-    console.log('✅ Post created successfully:', populatedPost);
 
     res.status(201).json({
       success: true,

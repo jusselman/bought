@@ -127,10 +127,7 @@ const ProfileScreen = () => {
       });
     }
 
-    console.log('📝 FULL UPDATE RESPONSE:', JSON.stringify(response.data, null, 2));
-
     if (response.data && response.data.user) {
-      console.log('✅ USER DATA RECEIVED:', response.data.user);
       dispatch(updateUser(response.data.user));
       setIsEditing(false);
       setProfileImage(null);

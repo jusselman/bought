@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -13,7 +14,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import { setPosts, setLoading } from '../../redux/slices/postSlice';
-import { setLogout } from '../../redux/slices/authSlice';
 import api from '../../services/api';
 import PostCard from '../../components/posts/PostCard';
 
@@ -36,12 +36,12 @@ const HomeScreen = ({ navigation }) => {
   const fetchPosts = async (pageNum = 1) => {
   try {
     dispatch(setLoading(true));
-    // ✅ ADD userId parameter to filter by followed users
+
     const response = await api.get(`/posts?page=${pageNum}&limit=20&userId=${user._id}`);
     
     if (response.data.success) {
       console.log('Posts received:', response.data.posts.length);
-      console.log('First post:', response.data.posts[0]);
+      console.log('First post:', response.data.posts[0]); response.data.posts[0]?.brandId);
 
       if (pageNum === 1) {
         dispatch(setPosts(response.data.posts));
@@ -57,6 +57,13 @@ const HomeScreen = ({ navigation }) => {
     dispatch(setLoading(false));
   }
 };
+
+useFocusEffect(
+    useCallback(() => {
+      // Refetch posts to include newly followed users
+      fetchPosts(1);
+    }, [user._id])
+  );
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -77,21 +84,6 @@ const HomeScreen = ({ navigation }) => {
 
   const handleUserPress = (userId) => {
     console.log('User pressed:', userId);
-  };
-
-  const handleLogout = () => {
-    Alert.alert(
-      'Logout',
-      'Are you sure you want to logout?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { 
-          text: 'Logout', 
-          style: 'destructive',
-          onPress: () => dispatch(setLogout())
-        },
-      ]
-    );
   };
 
   // Handle create post navigation

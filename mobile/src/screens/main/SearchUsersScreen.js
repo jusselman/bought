@@ -84,8 +84,6 @@ const SearchUsersScreen = ({ navigation }) => {
       `/users/${currentUser._id}/follow/${targetUserId}`
     );
 
-    console.log('👥 Follow response:', response.data);
-
     if (response.data.success) {
       // Extract just the IDs for Redux to match the User model structure
       const followingIds = response.data.following.map(user => 

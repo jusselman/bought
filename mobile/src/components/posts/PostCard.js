@@ -66,6 +66,11 @@ const PostCard = ({ post, onPress, onUserPress }) => {
         {post.subheading && (
           <Text style={styles.subheading}>{post.subheading}</Text>
         )}
+        {post.brandId && (
+          <View style={styles.brandContainer}>
+            <Text style={styles.brandName}>{post.brandId.name}</Text>
+          </View>
+        )}
         <Text style={styles.description}>{post.description}</Text>
 
         {/* Post Image with Error Handling */}
@@ -128,6 +133,16 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFFF',
     marginBottom: 8,
+  },
+  brandContainer: {
+  marginHorizontal: 16,
+  marginBottom: 8,
+  },
+  brandName: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#666',
+    letterSpacing: 0.5,
   },
   header: {
     flexDirection: 'row',

@@ -62,7 +62,7 @@ BrandSchema.index({ name: 'text', description: 'text' });
 
 // Virtual for follower count
 BrandSchema.virtual('followerCount').get(function() {
-  return this.followers.length;
+   return this.followers?.length || 0;
 });
 
 // Ensure virtuals are included when converting to JSON

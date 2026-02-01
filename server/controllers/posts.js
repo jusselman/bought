@@ -60,9 +60,8 @@ export const createPost = async (req, res) => {
     // Populate the post with user and release details
     const populatedPost = await Post.findById(newPost._id)
       .populate('userId', 'userName picturePath')
-      .populate('releaseId', 'name images brandId');
-
-    console.log('✅ Post created successfully:', populatedPost);
+      .populate('releaseId', 'name images brandId')
+      .populate('brandId', 'name');
 
     res.status(201).json({
       success: true,
@@ -104,7 +103,10 @@ export const getFeedPosts = async (req, res) => {
       .skip(skip)
       .limit(parseInt(limit))
       .populate('userId', 'userName picturePath')
+      .populate('brandId', 'name')
       .populate('releaseId', 'name images brandId');
+
+      console.log('💩 First post brandId after populate:', posts[0]?.brandId);
 
     const total = await Post.countDocuments(query);
 
