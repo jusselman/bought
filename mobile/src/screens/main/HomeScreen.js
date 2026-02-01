@@ -41,7 +41,8 @@ const HomeScreen = ({ navigation }) => {
     
     if (response.data.success) {
       console.log('Posts received:', response.data.posts.length);
-      console.log('First post:', response.data.posts[0]); response.data.posts[0]?.brandId);
+      console.log('First post:', response.data.posts[0]); 
+      console.log('First post brandId:', response.data.posts[0]?.brandId);
 
       if (pageNum === 1) {
         dispatch(setPosts(response.data.posts));
