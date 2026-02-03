@@ -9,6 +9,9 @@ import {
   ActivityIndicator,
   Alert,
   Image,
+  Keyboard,
+  InputAccessoryView,
+  Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
@@ -24,6 +27,8 @@ const SearchUsersScreen = ({ navigation }) => {
   
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.user);
+
+  const inputAccessoryViewID = 'searchInputAccessory';
 
   // Fetch all users on mount
   useEffect(() => {
@@ -75,49 +80,49 @@ const SearchUsersScreen = ({ navigation }) => {
   };
 
   const handleFollowToggle = async (targetUserId) => {
-  if (followingInProgress[targetUserId]) return;
+    if (followingInProgress[targetUserId]) return;
 
-  setFollowingInProgress({ ...followingInProgress, [targetUserId]: true });
+    setFollowingInProgress({ ...followingInProgress, [targetUserId]: true });
 
-  try {
-    const response = await api.put(
-      `/users/${currentUser._id}/follow/${targetUserId}`
-    );
-
-    if (response.data.success) {
-      // Extract just the IDs for Redux to match the User model structure
-      const followingIds = response.data.following.map(user => 
-        typeof user === 'string' ? user : user._id
+    try {
+      const response = await api.put(
+        `/users/${currentUser._id}/follow/${targetUserId}`
       );
-      
-      dispatch(updateUser({
-        following: followingIds
-      }));
 
-      // Refresh the user list to show updated follow status
-      if (searchQuery.trim()) {
-        searchUsers(searchQuery);
-      } else {
-        fetchAllUsers();
+      if (response.data.success) {
+        // Extract just the IDs for Redux to match the User model structure
+        const followingIds = response.data.following.map(user => 
+          typeof user === 'string' ? user : user._id
+        );
+        
+        dispatch(updateUser({
+          following: followingIds
+        }));
+
+        // Refresh the user list to show updated follow status
+        if (searchQuery.trim()) {
+          searchUsers(searchQuery);
+        } else {
+          fetchAllUsers();
+        }
       }
+    } catch (error) {
+      console.error('Error following user:', error);
+      Alert.alert('Error', 'Failed to update follow status');
+    } finally {
+      setFollowingInProgress({ ...followingInProgress, [targetUserId]: false });
     }
-  } catch (error) {
-    console.error('Error following user:', error);
-    Alert.alert('Error', 'Failed to update follow status');
-  } finally {
-    setFollowingInProgress({ ...followingInProgress, [targetUserId]: false });
-  }
-};
+  };
 
   const isFollowing = (userId) => {
-  if (!currentUser?.following) return false;
-  
-  return currentUser.following.some(item => {
-    // Handle both cases: array of IDs or array of user objects
-    const id = typeof item === 'string' ? item : item._id;
-    return id === userId;
-  });
-};
+    if (!currentUser?.following) return false;
+    
+    return currentUser.following.some(item => {
+      // Handle both cases: array of IDs or array of user objects
+      const id = typeof item === 'string' ? item : item._id;
+      return id === userId;
+    });
+  };
 
   const renderUserItem = ({ item }) => {
     const following = isFollowing(item._id);
@@ -204,12 +209,16 @@ const SearchUsersScreen = ({ navigation }) => {
           }}
           autoCapitalize="none"
           autoCorrect={false}
-          autoFocus
+          returnKeyType="search"
+          onSubmitEditing={() => Keyboard.dismiss()}
+          blurOnSubmit={true}
+          inputAccessoryViewID={Platform.OS === 'ios' ? inputAccessoryViewID : undefined}
         />
         {searchQuery.length > 0 && (
           <TouchableOpacity onPress={() => {
             setSearchQuery('');
             fetchAllUsers(); // Reset to show all users
+            Keyboard.dismiss();
           }}>
             <Ionicons name="close-circle" size={20} color="#999" />
           </TouchableOpacity>
@@ -229,7 +238,23 @@ const SearchUsersScreen = ({ navigation }) => {
           contentContainerStyle={
             users.length === 0 ? styles.emptyList : styles.listContent
           }
+          keyboardDismissMode="on-drag"
+          onScrollBeginDrag={() => Keyboard.dismiss()}
         />
+      )}
+
+      {/* iOS Keyboard Accessory - Done Button */}
+      {Platform.OS === 'ios' && (
+        <InputAccessoryView nativeID={inputAccessoryViewID}>
+          <View style={styles.keyboardAccessory}>
+            <TouchableOpacity 
+              style={styles.doneButton}
+              onPress={() => Keyboard.dismiss()}
+            >
+              <Text style={styles.doneButtonText}>Done</Text>
+            </TouchableOpacity>
+          </View>
+        </InputAccessoryView>
       )}
     </View>
   );
@@ -356,6 +381,24 @@ const styles = StyleSheet.create({
     color: '#666',
     textAlign: 'center',
     marginTop: 8,
+  },
+  keyboardAccessory: {
+    backgroundColor: '#F8F8F8',
+    borderTopWidth: 1,
+    borderTopColor: '#E0E0E0',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  doneButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  doneButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#007AFF',
   },
 });
 

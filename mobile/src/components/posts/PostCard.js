@@ -1,4 +1,4 @@
-import { useState, memo } from 'react';
+import { useState, memo, useEffect } from 'react';
 import { getImageUrl, getAvatarUrl } from '../../utils/imageUtils';
 import {
   View,
@@ -13,15 +13,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPost } from '../../redux/slices/postSlice';
 import api from '../../services/api';
 import moment from 'moment';
+import CommentsModal from './CommentsModal';
 
 const PostCard = ({ post, onPress, onUserPress }) => {
   const dispatch = useDispatch();
   const loggedInUserId = useSelector((state) => state.auth.user._id);
   const [imageError, setImageError] = useState(false);
+  const [showCommentsModal, setShowCommentsModal] = useState(false);
   
   const isLiked = post.likes?.[loggedInUserId] || false;
   const likeCount = post.likes ? Object.keys(post.likes).length : 0;
   const commentCount = post.comments?.length || 0;
+
+  // Pre-cache image for instant modal loading
+  useEffect(() => {
+    if (post.imagePath) {
+      Image.prefetch(getImageUrl(post.imagePath));
+    }
+  }, [post.imagePath]);
 
   const handleLike = async () => {
     try {
@@ -38,6 +47,10 @@ const PostCard = ({ post, onPress, onUserPress }) => {
     }
   };
 
+  const handleCommentPress = () => {
+    setShowCommentsModal(true);
+  };
+
   const getTimeAgo = (createdAt) => {
     return moment(createdAt).fromNow();
   };
@@ -45,87 +58,96 @@ const PostCard = ({ post, onPress, onUserPress }) => {
   const imageUrl = `http://10.0.0.151:6001/assets/${post.imagePath}`;
 
   return (
-    <View style={styles.container}>
-      {/* User Info Header */}
-      <TouchableOpacity 
-        style={styles.header}
-        onPress={() => onUserPress?.(post.userId)}
-      >
-        <Image
-          source={{ uri: getAvatarUrl(post.userPicturePath) }}
-          style={styles.avatar}
-        />
-        <View style={styles.userInfo}>
-          <Text style={styles.userName}>{post.userName}</Text>
-          <Text style={styles.timeAgo}>{getTimeAgo(post.createdAt)}</Text>
-        </View>
-      </TouchableOpacity>
-
-      {/* Post Content */}
-      <TouchableOpacity onPress={() => onPress?.(post._id)}>
-        {post.subheading && (
-          <Text style={styles.subheading}>{post.subheading}</Text>
-        )}
-        {post.brandId && (
-          <View style={styles.brandContainer}>
-            <Text style={styles.brandName}>{post.brandId.name}</Text>
-          </View>
-        )}
-        <Text style={styles.description}>{post.description}</Text>
-
-        {/* Post Image with Error Handling */}
-        {post.imagePath && (
-          <View>
-            {imageError ? (
-              <View style={styles.errorContainer}>
-                <Ionicons name="image-outline" size={48} color="#999" />
-                <Text style={styles.errorText}>Failed to load image</Text>
-                <Text style={styles.errorUrl}>{post.imagePath}</Text>
-              </View>
-            ) : (
-              <Image
-                source={{ uri: getImageUrl(post.imagePath) }}
-                style={styles.postImage}
-                resizeMode="cover"
-                onError={() => {
-                  console.log('Image failed:', getImageUrl(post.imagePath));
-                  setImageError(true);
-                }}
-              />
-            )}
-          </View>
-        )}
-      </TouchableOpacity>
-
-      {/* Actions Bar */}
-      <View style={styles.actionsBar}>
+    <>
+      <View style={styles.container}>
+        {/* User Info Header */}
         <TouchableOpacity 
-          style={styles.actionButton}
-          onPress={handleLike}
+          style={styles.header}
+          onPress={() => onUserPress?.(post.userId)}
         >
-          <Ionicons
-            name={isLiked ? 'heart' : 'heart-outline'}
-            size={24}
-            color={isLiked ? '#FF3B30' : '#000'}
+          <Image
+            source={{ uri: getAvatarUrl(post.userPicturePath) }}
+            style={styles.avatar}
           />
-          <Text style={styles.actionText}>{likeCount}</Text>
+          <View style={styles.userInfo}>
+            <Text style={styles.userName}>{post.userName}</Text>
+            <Text style={styles.timeAgo}>{getTimeAgo(post.createdAt)}</Text>
+          </View>
         </TouchableOpacity>
 
-        <TouchableOpacity 
-          style={styles.actionButton}
-          onPress={() => onPress?.(post._id)}
-        >
-          <Ionicons name="chatbubble-outline" size={22} color="#000" />
-          <Text style={styles.actionText}>{commentCount}</Text>
+        {/* Post Content */}
+        <TouchableOpacity onPress={() => onPress?.(post._id)} activeOpacity={1}>
+          {post.subheading && (
+            <Text style={styles.subheading}>{post.subheading}</Text>
+          )}
+          {post.brandId && (
+            <View style={styles.brandContainer}>
+              <Text style={styles.brandName}>{post.brandId.name}</Text>
+            </View>
+          )}
+          <Text style={styles.description}>{post.description}</Text>
+
+          {/* Post Image with Error Handling */}
+          {post.imagePath && (
+            <View>
+              {imageError ? (
+                <View style={styles.errorContainer}>
+                  <Ionicons name="image-outline" size={48} color="#999" />
+                  <Text style={styles.errorText}>Failed to load image</Text>
+                  <Text style={styles.errorUrl}>{post.imagePath}</Text>
+                </View>
+              ) : (
+                <Image
+                  source={{ uri: getImageUrl(post.imagePath) }}
+                  style={styles.postImage}
+                  resizeMode="cover"
+                  onError={() => {
+                    console.log('Image failed:', getImageUrl(post.imagePath));
+                    setImageError(true);
+                  }}
+                />
+              )}
+            </View>
+          )}
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.actionButton}>
-          <Ionicons name="paper-plane-outline" size={22} color="#000" />
-        </TouchableOpacity>
+        {/* Actions Bar */}
+        <View style={styles.actionsBar}>
+          <TouchableOpacity 
+            style={styles.actionButton}
+            onPress={handleLike}
+          >
+            <Ionicons
+              name={isLiked ? 'heart' : 'heart-outline'}
+              size={24}
+              color={isLiked ? '#FF3B30' : '#000'}
+            />
+            <Text style={styles.actionText}>{likeCount}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.actionButton}
+            onPress={handleCommentPress}
+          >
+            <Ionicons name="chatbubble-outline" size={22} color="#000" />
+            <Text style={styles.actionText}>{commentCount}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.actionButton}>
+            <Ionicons name="paper-plane-outline" size={22} color="#000" />
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.divider} />
       </View>
 
-      <View style={styles.divider} />
-    </View>
+      {/* Comments Modal */}
+      <CommentsModal
+        visible={showCommentsModal}
+        onClose={() => setShowCommentsModal(false)}
+        post={post}
+      />
+    </>
   );
 };
 
@@ -135,8 +157,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   brandContainer: {
-  marginHorizontal: 16,
-  marginBottom: 8,
+    marginHorizontal: 16,
+    marginBottom: 8,
   },
   brandName: {
     fontSize: 14,

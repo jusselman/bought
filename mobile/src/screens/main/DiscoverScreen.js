@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   TextInput,
   Alert,
+  Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -44,6 +45,14 @@ const DiscoverScreen = ({ navigation }) => {
         );
         setBrands(sortedBrands);
         setFilteredBrands(sortedBrands);
+
+        // Prefetch all brand logos in the background so they're
+        // cached before the user taps into any BrandDetail screen
+        sortedBrands.forEach(brand => {
+          if (brand.logoPath) {
+            Image.prefetch(brand.logoPath).catch(() => {});
+          }
+        });
       }
     } catch (error) {
       console.error('Error fetching brands:', error);
@@ -66,27 +75,27 @@ const DiscoverScreen = ({ navigation }) => {
   };
 
   const handleFollowToggle = async (brandId) => {
-  if (followingInProgress[brandId]) return;
+    if (followingInProgress[brandId]) return;
 
-  setFollowingInProgress({ ...followingInProgress, [brandId]: true });
+    setFollowingInProgress({ ...followingInProgress, [brandId]: true });
 
-  try {
-    const response = await api.post(`/users/${user._id}/brands/follow`, {
-      brandId,
-    });
+    try {
+      const response = await api.post(`/users/${user._id}/brands/follow`, {
+        brandId,
+      });
 
-    if (response.data.success) {
-      dispatch(updateUser({
-        followedBrands: response.data.followedBrands,
-      }));
+      if (response.data.success) {
+        dispatch(updateUser({
+          followedBrands: response.data.followedBrands,
+        }));
+      }
+    } catch (error) {
+      console.error('Error following brand:', error);
+      Alert.alert('Error', 'Failed to update brand follow status');
+    } finally {
+      setFollowingInProgress({ ...followingInProgress, [brandId]: false });
     }
-  } catch (error) {
-    console.error('Error following brand:', error);
-    Alert.alert('Error', 'Failed to update brand follow status');
-  } finally {
-    setFollowingInProgress({ ...followingInProgress, [brandId]: false });
-  }
-};
+  };
 
   const handleBrandPress = (brandId) => {
     navigation.navigate('BrandDetail', { brandId });

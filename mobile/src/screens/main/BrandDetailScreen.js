@@ -20,6 +20,7 @@ const BrandDetailScreen = ({ route, navigation }) => {
   const [brand, setBrand] = useState(null);
   const [loading, setLoading] = useState(true);
   const [followLoading, setFollowLoading] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
@@ -50,7 +51,7 @@ const BrandDetailScreen = ({ route, navigation }) => {
     setFollowLoading(true);
 
     try {
-      const response = await api.post(`/brands/user/${user._id}/follow`, {
+      const response = await api.post(`/users/${user._id}/brands/follow`, {
         brandId,
       });
 
@@ -68,9 +69,8 @@ const BrandDetailScreen = ({ route, navigation }) => {
   };
 
   const handleWebsitePress = () => {
-    if (brand?.linkToWebsite) {
-      // Ensure URL has proper protocol
-      let url = brand.linkToWebsite;
+    if (brand?.websiteUrl) {
+      let url = brand.websiteUrl;
       if (!url.startsWith('http://') && !url.startsWith('https://')) {
         url = 'https://' + url;
       }
@@ -113,23 +113,36 @@ const BrandDetailScreen = ({ route, navigation }) => {
         {/* Brand Name */}
         <Text style={styles.brandName}>{brand.name}</Text>
 
-        {/* Website Link */}
-        <TouchableOpacity onPress={handleWebsitePress} style={styles.websiteContainer}>
-          <Ionicons name="globe-outline" size={20} color="#007AFF" style={styles.websiteIcon} />
-          <Text style={styles.websiteText}>{brand.linkToWebsite}</Text>
-          <Ionicons name="open-outline" size={16} color="#007AFF" />
-        </TouchableOpacity>
+        {/* Website Link - only render if websiteUrl exists */}
+        {brand.websiteUrl && (
+          <TouchableOpacity onPress={handleWebsitePress} style={styles.websiteContainer}>
+            <Ionicons name="globe-outline" size={20} color="#007AFF" style={styles.websiteIcon} />
+            <Text style={styles.websiteText}>{brand.websiteUrl}</Text>
+            <Ionicons name="open-outline" size={16} color="#007AFF" />
+          </TouchableOpacity>
+        )}
 
-        {/* Brand Image */}
-        <Image
-          source={{ uri: brand.brandImage }}
-          style={styles.brandImage}
-          resizeMode="cover"
-        />
+        {/* Brand Image with loading placeholder */}
+        {brand.logoPath && (
+          <View style={styles.imageContainer}>
+            {!imageLoaded && (
+              <ActivityIndicator style={styles.imagePlaceholder} size="large" color="#999" />
+            )}
+            <Image
+              source={{ uri: brand.logoPath }}
+              style={[styles.brandImage, !imageLoaded && styles.imageHidden]}
+              resizeMode="cover"
+              onLoad={() => setImageLoaded(true)}
+              onError={() => setImageLoaded(true)}
+            />
+          </View>
+        )}
 
-        {/* About Section */}
+        {/* About Section - uses description from MongoDB */}
         <Text style={styles.aboutTitle}>ABOUT</Text>
-        <Text style={styles.aboutText}>{brand.about}</Text>
+        <Text style={styles.aboutText}>
+          {brand.description || 'No description available.'}
+        </Text>
 
         {/* Follow Button */}
         <TouchableOpacity
@@ -201,12 +214,28 @@ const styles = StyleSheet.create({
     color: '#007AFF',
     marginRight: 4,
   },
-  brandImage: {
+  imageContainer: {
     width: '100%',
     height: 250,
     borderRadius: 12,
     backgroundColor: '#F0F0F0',
     marginBottom: 24,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  brandImage: {
+    position: 'absolute',
+    width: '100%',
+    height: 250,
+    borderRadius: 12,
+  },
+  imageHidden: {
+    opacity: 0,
+  },
+  imagePlaceholder: {
+    position: 'absolute',
+    zIndex: 0,
   },
   aboutTitle: {
     fontSize: 24,
