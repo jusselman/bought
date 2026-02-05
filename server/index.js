@@ -19,6 +19,7 @@ import brandRoutes from "./routes/brands.js";
 import releaseRoutes from "./routes/releases.js";
 import postRoutes from "./routes/posts.js";
 import notificationRoutes from "./routes/notifications.js";
+import brandUpdatesRoutes from "./routes/brandUpdatesRoutes.js"; 
 
 // Import middleware
 import { verifyToken } from "./middleware/auth.js";
@@ -29,11 +30,13 @@ import { register } from "./controllers/auth.js";
 import { createRelease } from "./controllers/releases.js";
 import { createPost } from "./controllers/posts.js";
 
+// Import RSS cron jobs
+import rssCronJobs from "./jobs/rssCronJobs.js"; // ← NEW
+
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
-
 const app = express();
 
 // Middleware
@@ -110,6 +113,7 @@ app.use("/brands", brandRoutes);
 app.use("/releases", releaseRoutes);
 app.use("/posts", postRoutes);
 app.use("/notifications", notificationRoutes);
+app.use("/updates", brandUpdatesRoutes); // ← NEW (no /api prefix - already in limiter)
 
 /* ERROR HANDLING */
 // 404 handler
@@ -125,6 +129,9 @@ mongoose
   .then(() => {
     app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
     console.log("✅ MongoDB connected successfully");
+    
+    // ← NEW: Start RSS cron jobs after successful DB connection
+    rssCronJobs.start();
   })
   .catch((error) => console.log(`❌ ${error} - MongoDB did not connect`));
 
@@ -132,4 +139,17 @@ mongoose
 process.on("unhandledRejection", (err) => {
   console.error("❌ Unhandled Rejection:", err);
   process.exit(1);
+});
+
+// ← NEW: Graceful shutdown - stop cron jobs
+process.on("SIGTERM", () => {
+  console.log("📴 SIGTERM received, shutting down gracefully");
+  rssCronJobs.stop();
+  process.exit(0);
+});
+
+process.on("SIGINT", () => {
+  console.log("📴 SIGINT received, shutting down gracefully");
+  rssCronJobs.stop();
+  process.exit(0);
 });

@@ -52,6 +52,19 @@ const BrandSchema = new mongoose.Schema(
     lastUpdated: {
       type: Date,
       default: Date.now
+    },
+    rssFeedUrl: {
+      type: String,
+      default: null,
+      trim: true
+    },
+    lastRssFetch: {
+      type: Date,
+      default: null
+    },
+    rssFetchEnabled: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }
